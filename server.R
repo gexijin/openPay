@@ -23,6 +23,10 @@ server <- function(input, output, session) {
     paste0("Amount: For each zipcode, a cumulative total of the dollar amount
            from every payment over the years 2013-18.")
   })
+  output$txtOutput4 <- renderText({
+    paste0("List of countries, except the US, who made payments.")
+  })
+  
 
 
 
@@ -118,5 +122,15 @@ server <- function(input, output, session) {
       ),
       col = carto.pal(pal1 = "blue.pal", n1 = 8)
     )
+  })
+  
+  
+  
+  
+  
+  output$country <- renderPlot({
+    
+    
+    
   })
 }

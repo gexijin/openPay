@@ -42,6 +42,11 @@ fluidPage(
                                  font-style: bold;
                                  font-family: Arial;
                                  }"),
+        tags$style("#txtOutput4{color: steelblue;
+                                 font-size: 17px;
+                                 font-style: bold;
+                                 font-family: Arial;
+                                 }"),
         tags$style("#city{font-size: 17px;}")
       ),
 
@@ -65,6 +70,11 @@ fluidPage(
           "Totaled Payment Amounts, by Zipcode",
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
+        ),
+        tabPanel(
+          "Payments by Country",
+          plotOutput("country"),
+          verbatimTextOutput("txtOutput4")
         )
       ),
       width = 12
