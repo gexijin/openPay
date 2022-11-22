@@ -13,7 +13,7 @@ fluidPage(
   titlePanel(h1("Open Payments In South Dakota (2013-2018)",
     align = "center"
   )),
-  h3("This is a test."),
+  h3("This is a test2."),
 
   # Sidebar with a select input for City
   sidebarLayout(
