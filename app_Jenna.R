@@ -15,6 +15,7 @@ library(tigris)      ## For downloading the zipcode map
 payment <- read_csv("payment.csv")
 payment$nature.of.payment <- as.factor(payment$nature.of.payment)
 
+
 cities <- list("SIOUX FALLS", "RAPID CITY", "PIERRE", "WATERTOWN","VERMILLION",
             "ABERDEEN", "CUSTER", "MITCHELL", "SPEARFISH", "BROOKINGS")
 
@@ -22,6 +23,24 @@ cities <- list("SIOUX FALLS", "RAPID CITY", "PIERRE", "WATERTOWN","VERMILLION",
 mapdata <- read_csv("zippy.csv")
 
 
+
+### for box plot
+df <- read_csv("calebpayment.csv") # only making payment country & payment total
+
+# merge with jenna's df
+df2 <- cbind(df, payment)
+
+# remove US
+df2 <- df2 %>% 
+  filter(applicable_manufacturer_or_applicable_gpo_making_payment_country != "United States")
+
+# rename cols
+names(df2)[names(df2) == 'applicable_manufacturer_or_applicable_gpo_making_payment_country'] <- 'Applicable Manufacturer/GOP Making Payment Country'
+names(df2)[names(df2) == 'physician_primary_type'] <- 'Physician Primary Type'
+names(df2)[names(df2) == 'form_of_payment_or_transfer_of_value'] <- 'Form of Payment or Transfer of Value'
+names(df2)[names(df2) == 'charity_indicator'] <- 'Charity Indicator'
+names(df2)[names(df2) == 'related_product_indicator'] <- 'Related Product Indicator'
+names(df2)[names(df2) == 'nature.of.payment'] <- 'Nature of Payment'
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(

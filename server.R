@@ -129,8 +129,16 @@ server <- function(input, output, session) {
   
   
   output$country <- renderPlot({
-    
-    
+    ggplot(df2, aes(x = input$predictors, fill = 'Applicable Manufacturer/GOP Making Payment Country')) +
+      geom_bar()
+    # +
+      # theme(axis.title.y = element_blank(),
+      #       axis.text.y = element_blank(), 
+      #       axis.ticks.y = element_blank(),
+      #       axis.title.x = element_blank(),
+      #       axis.text.x = element_text(size = 18),
+      #       legend.text = element_text(size = 20),
+      #       legend.title = element_text(size = 17))
     
   })
 }

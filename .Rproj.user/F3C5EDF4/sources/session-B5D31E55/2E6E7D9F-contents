@@ -1,0 +1,79 @@
+library(shiny)
+library(readr)
+library(tidyverse)
+
+# import data
+payment <- read_csv("open_payment_sd_2013-18.csv")
+
+# minimal cleanup
+payment <- payment %>% 
+  filter(total_amount_of_payment_usdollars > 1)
+
+# log total payment
+payment.ln <- payment
+payment.ln$total_amount_of_payment_usdollars <- log(payment.ln$total_amount_of_payment_usdollars)
+
+# change data type
+payment$physician_primary_type <- as.factor(payment$physician_primary_type)
+payment$nature_of_payment_or_transfer_of_value <- as.factor(payment$nature_of_payment_or_transfer_of_value)
+
+# subset wanted variables
+final.payment <- subset(payment.ln, select = c(applicable_manufacturer_or_applicable_gpo_making_payment_country,
+                                               covered_recipient_type,
+                                               physician_primary_type,
+                                               form_of_payment_or_transfer_of_value,
+                                               third_party_payment_recipient_indicator))
+
+# Rename cols for neatness
+colnames(final.payment) <- c("Applicable Manufacturer or GOP Making Payment Country",
+                             "Covered Recipient Type",
+                             "Physician Primary Type",
+                             "Form of Payment or Transfer of Value",
+                             "Third Party Payment Recipient Indicator")
+
+names(payment.ln)[names(payment.ln) == 'applicable_manufacturer_or_applicable_gpo_making_payment_country'] <- 'Applicable Manufacturer or GOP Making Payment Country'
+names(payment.ln)[names(payment.ln) == 'covered_recipient_type'] <- 'Covered Recipient Type'
+names(payment.ln)[names(payment.ln) == 'physician_primary_type'] <- 'Physician Primary Type'
+names(payment.ln)[names(payment.ln) == 'form_of_payment_or_transfer_of_value'] <- 'Form of Payment or Transfer of Value'
+names(payment.ln)[names(payment.ln) == 'third_party_payment_recipient_indicator'] <- 'Third Party Payment Recipient Indicator'
+
+# Define UI for application that draws a boxplot
+ui <- fluidPage(
+  
+  # Application title
+  titlePanel("Open Payment Health Data"),
+  
+  # Sidebar with a select input for variable name
+  sidebarLayout(
+    sidebarPanel(
+      varSelectInput("country",
+                     "Choose Variable",
+                     final.payment)
+    ),
+    
+    # Show the boxplot
+    mainPanel(
+      plotOutput("distPlot", height = 700)
+    )
+  )
+)
+
+# Define server logic required to draw a boxplot
+server <- function(input, output) {
+  
+  output$distPlot <- renderPlot({
+    
+    # boxplot for total payment
+    x    <- payment.ln$total_amount_of_payment_usdollars
+    
+    ggplot(payment.ln, aes(x, !!input$country)) +
+      geom_boxplot(aes(fill = !!input$country), show.legend = FALSE) +
+      xlab("Logged Payment") +
+      theme(axis.title.y = element_blank(),
+            axis.text.y = element_text(size = 20),
+            axis.title.x = element_text(size = 20))
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)

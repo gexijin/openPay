@@ -71,9 +71,19 @@ fluidPage(
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
         ),
-        tabPanel(
-          "Payments by Country",
-          plotOutput("country"),
+        tabPanel("Payments by Country",
+          sidebarLayout(
+            sidebarPanel(
+              titlePanel("Test"),
+              selectInput("predictors", h3("Select Variable"),
+                          choices = c("Physician Primary Type",
+                                      "Related Product Indicator",
+                                      "Charity Indicator",
+                                      "Form of Payment or Transfer of Value")
+                          )
+            ),
+            mainPanel(plotOutput("country"))
+          ),
           verbatimTextOutput("txtOutput4")
         )
       ),
