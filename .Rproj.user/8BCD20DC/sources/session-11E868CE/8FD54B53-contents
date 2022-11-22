@@ -22,6 +22,47 @@ cities <- list("SIOUX FALLS", "RAPID CITY", "PIERRE", "WATERTOWN","VERMILLION",
 mapdata <- read_csv("zippy.csv")
 
 
+###############################################################################################
+
+
+# Create single name variable
+payments$physician_full_name <- 
+  paste(total_pay_data$physician_first_name,
+        total_pay_data$physician_last_name,
+        sep = " ")
+
+# Total payments received by each physician
+phys_amount <- aggregate(total_pay_data$total_amount_of_payment_usdollars, 
+                         by = list(total_pay_data$physician_full_name,
+                                   total_pay_data$recipient_city),
+                         FUN = sum)
+
+
+# Rename columns
+phys_amount <- phys_amount %>%
+  rename(Physician = Group.1,
+         City = Group.2,
+         Total = x)
+ 
+# payment_totals <-
+#   ggplot(phys_amount, aes(Total, na.rm=TRUE)) +
+#   geom_histogram(data=subset(phys_amount, 
+#                              City=="SIOUX FALLS" & 
+#                                !is.na(Total) & Total > 50000),
+#                  fill="blue",
+#                  bins=100) +
+#   labs(title="Total payments ($) received per physician") + 
+#   xlab("Total payments received ($)") 
+# 
+# ggplotly(payment_totals)
+# 
+# 
+# 
+####################################################################################
+
+
+
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
 

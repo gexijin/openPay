@@ -16,3 +16,25 @@ cities <- list(
 
 ## for map plot
 mapdata <- read_csv("zippy.csv")
+
+
+#############
+# Uses Hanna's full data frame
+
+# Create single name variable
+payments$physician_full_name <- 
+  paste(total_pay_data$physician_first_name,
+        total_pay_data$physician_last_name,
+        sep = " ")
+
+# Total payments received by each physician
+phys_amount <- aggregate(total_pay_data$total_amount_of_payment_usdollars, 
+                         by = list(total_pay_data$physician_full_name,
+                                   total_pay_data$recipient_city),
+                         FUN = sum)
+
+# Rename columns in physician amounts data frame
+phys_amount <- phys_amount %>%
+  rename(Physician = Group.1,
+         City = Group.2,
+         Total = x)
