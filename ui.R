@@ -63,6 +63,10 @@ fluidPage(
           "Totaled Payment Amounts, by Zipcode",
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
+        ),
+        tabPanel(
+          "Total Payment and Payment Type",
+          verbatimTextOutput("Emmatxt")
         )
       ),
       width = 12
