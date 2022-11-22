@@ -4,6 +4,7 @@
 
 library(shiny)
 library(plotly)
+library(DT)
 
 # Define UI for application that draws a histogram
 fluidPage(
@@ -13,7 +14,7 @@ fluidPage(
   titlePanel(h1("Open Payments In South Dakota (2013-2018)",
     align = "center"
   )),
-  h3("This is a test2."),
+  
 
   # Sidebar with a select input for City
   sidebarLayout(
@@ -65,6 +66,10 @@ fluidPage(
           "Totaled Payment Amounts, by Zipcode",
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
+        ),
+        tabPanel(
+          "Payment Summaries",
+          verbatimTextOutput("Gracetxt")
         )
       ),
       width = 12
