@@ -8,7 +8,7 @@ Deployed  [https://sdsucamp.shinyapps.io/Jenna/](https://sdsucamp.shinyapps.io/J
 Fork this repository first. Make changes. After testing, you can submit changes by creating Pull Requests to merge into the **Main branch**. The code at the **Deployed** branch are tested and deployed to the website.
 
 # Bugs and ideas for improvements
-File bug reports at the Issues tab.  Also document any ideas for improvement. If you solve the issue, please close the issue.
+File bug reports at the [Issues tab](https://github.com/gexijin/openPay/issues).  You can also write down any ideas for improvement. If you solve an issue, mark it so by closing the issue.
 
 # Code Structure
 Main files for the Shiny App:
