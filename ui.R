@@ -67,7 +67,6 @@ fluidPage(
         tabPanel(
           "Total Payment and Payment Type",
           verbatimTextOutput("Emmatxt")
-
         ),        
         tabPanel(
           "Payment Summaries",

@@ -27,7 +27,7 @@ server <- function(input, output, session) {
   output$Gracetxt <- renderText({
     paste0("Summary Payments: Summary statistics for payments in each category 
           of doctor for each year from 2013 to 2018.")
-
+  })
   output$Emmatxt <- renderText({
     paste0("Total Payment Amount by Payment Type and Profession")
 
