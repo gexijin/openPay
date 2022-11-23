@@ -28,6 +28,15 @@ server <- function(input, output, session) {
   })
   
 
+  output$Gracetxt <- renderText({
+    paste0("Summary Payments: Summary statistics for payments in each category 
+          of doctor for each year from 2013 to 2018.")
+  })
+  output$Emmatxt <- renderText({
+    paste0("Total Payment Amount by Payment Type and Profession")
+
+  })
+
 
 
 
@@ -125,9 +134,7 @@ server <- function(input, output, session) {
   })
   
   
-  
-  
-  
+
   output$country <- renderPlot({
     ggplot(df2, aes_string(input$predictors)) +
       geom_bar(aes(fill = df2$'Applicable_Manufacturer_or_GOP_Making_Payment_Country')) +
@@ -141,4 +148,5 @@ server <- function(input, output, session) {
             guides(fill = guide_legend(title = "Country"))
     
   })
+
 }

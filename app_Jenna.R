@@ -24,6 +24,7 @@ mapdata <- read_csv("zippy.csv")
 
 
 
+
 ### for box plot
 df <- read_csv("calebpayment.csv") # only making payment country & payment total
 
@@ -47,6 +48,7 @@ df2$'Physician_Primary_Type' <- as.factor(df2$'Physician_Primary_Type')
 df2$'Form_of_Payment_or_Transfer_of_Value' <- as.factor(df2$'Form_of_Payment_or_Transfer_of_Value')
 df2$'Related_Product_Indicator' <- as.factor(df2$'Related_Product_Indicator')
 df2$'Charity_Indicator' <- as.factor(df2$'Charity_Indicator')
+
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -108,7 +110,8 @@ ui <- fluidPage(
             tabPanel("Totaled Payment Amounts, by Zipcode"
                      , plotOutput("plot2")
                      , verbatimTextOutput("txtOutput3")
-                     )
+                     ),
+            tabPanel("Marie's tab")
                     ),
           width = 12
           
