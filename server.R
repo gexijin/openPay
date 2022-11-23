@@ -23,6 +23,10 @@ server <- function(input, output, session) {
     paste0("Amount: For each zipcode, a cumulative total of the dollar amount
            from every payment over the years 2013-18.")
   })
+  output$txtOutput4 <- renderText({
+    paste0("List of countries, except the US, who made payments.")
+  })
+  
 
   output$Gracetxt <- renderText({
     paste0("Summary Payments: Summary statistics for payments in each category 
@@ -130,4 +134,19 @@ server <- function(input, output, session) {
   })
   
   
+
+  output$country <- renderPlot({
+    ggplot(df2, aes_string(input$predictors)) +
+      geom_bar(aes(fill = df2$'Applicable_Manufacturer_or_GOP_Making_Payment_Country')) +
+      theme(axis.title.y = element_blank(),
+            axis.text.y = element_blank(),
+            axis.ticks.y = element_blank(),
+            axis.title.x = element_blank(),
+            axis.text.x = element_text(size = 12),
+            legend.text = element_text(size = 19),
+            legend.title = element_text(size = 20)) +
+            guides(fill = guide_legend(title = "Country"))
+    
+  })
+
 }

@@ -40,6 +40,11 @@ fluidPage(
                                  font-style: bold;
                                  font-family: Arial;
                                  }"),
+        tags$style("#txtOutput4{color: steelblue;
+                                 font-size: 17px;
+                                 font-style: bold;
+                                 font-family: Arial;
+                                 }"),
         tags$style("#city{font-size: 17px;}")
       ),
 
@@ -64,6 +69,22 @@ fluidPage(
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
         ),
+
+        tabPanel("Payments by Country",
+          sidebarLayout(
+            sidebarPanel(
+              titlePanel("Payments by Country"),
+              selectInput("predictors", h3("Select Variable"),
+                          choices = c('Physician_Primary_Type',
+                                      'Related_Product_Indicator',
+                                      'Charity_Indicator',
+                                      'Form_of_Payment_or_Transfer_of_Value')
+                          )
+            ),
+            mainPanel(plotOutput("country"))
+          ),
+          verbatimTextOutput("txtOutput4")
+         )
         tabPanel(
           "Total Payment and Payment Type",
           verbatimTextOutput("Emmatxt")
