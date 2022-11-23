@@ -12,6 +12,6 @@ File bug reports at the [Issues tab](https://github.com/gexijin/openPay/issues).
 
 # Code Structure
 Main files for the Shiny App:
-1. **Global.R**   This file contains global variables, which are usually created by reading in data files.
-2. **UI.R**   This file defines user interface
-3. **Server.R** Server logic, such as functions to generate plots.
+1. **global.R**   This file contains global variables, which are usually created by reading in data files.
+2. **ui.R**   This file defines user interface
+3. **server.R** Server logic, such as functions to generate plots.
