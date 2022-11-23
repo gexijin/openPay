@@ -35,12 +35,18 @@ df2 <- df2 %>%
   filter(applicable_manufacturer_or_applicable_gpo_making_payment_country != "United States")
 
 # rename cols
-names(df2)[names(df2) == 'applicable_manufacturer_or_applicable_gpo_making_payment_country'] <- 'Applicable Manufacturer/GOP Making Payment Country'
-names(df2)[names(df2) == 'physician_primary_type'] <- 'Physician Primary Type'
-names(df2)[names(df2) == 'form_of_payment_or_transfer_of_value'] <- 'Form of Payment or Transfer of Value'
-names(df2)[names(df2) == 'charity_indicator'] <- 'Charity Indicator'
-names(df2)[names(df2) == 'related_product_indicator'] <- 'Related Product Indicator'
-names(df2)[names(df2) == 'nature.of.payment'] <- 'Nature of Payment'
+names(df2)[names(df2) == 'applicable_manufacturer_or_applicable_gpo_making_payment_country'] <- 'Applicable_Manufacturer_or_GOP_Making_Payment_Country'
+names(df2)[names(df2) == 'physician_primary_type'] <- 'Physician_Primary_Type'
+names(df2)[names(df2) == 'form_of_payment_or_transfer_of_value'] <- 'Form_of_Payment_or_Transfer_of_Value'
+names(df2)[names(df2) == 'charity_indicator'] <- 'Charity_Indicator'
+names(df2)[names(df2) == 'related_product_indicator'] <- 'Related_Product_Indicator'
+names(df2)[names(df2) == 'nature.of.payment'] <- 'Nature_of_Payment'
+names(df2)[names(df2) == 'recipient_city'] <- 'Recipient_City'
+df2$'Applicable_Manufacturer_or_GOP_Making_Payment_Country' <- as.factor(df2$'Applicable_Manufacturer_or_GOP_Making_Payment_Country')
+df2$'Physician_Primary_Type' <- as.factor(df2$'Physician_Primary_Type')
+df2$'Form_of_Payment_or_Transfer_of_Value' <- as.factor(df2$'Form_of_Payment_or_Transfer_of_Value')
+df2$'Related_Product_Indicator' <- as.factor(df2$'Related_Product_Indicator')
+df2$'Charity_Indicator' <- as.factor(df2$'Charity_Indicator')
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(

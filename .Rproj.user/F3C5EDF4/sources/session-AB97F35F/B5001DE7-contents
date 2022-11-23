@@ -74,12 +74,12 @@ fluidPage(
         tabPanel("Payments by Country",
           sidebarLayout(
             sidebarPanel(
-              titlePanel("Test"),
+              titlePanel("Payments by Country"),
               selectInput("predictors", h3("Select Variable"),
-                          choices = c("Physician Primary Type",
-                                      "Related Product Indicator",
-                                      "Charity Indicator",
-                                      "Form of Payment or Transfer of Value")
+                          choices = c('Physician_Primary_Type',
+                                      'Related_Product_Indicator',
+                                      'Charity_Indicator',
+                                      'Form_of_Payment_or_Transfer_of_Value')
                           )
             ),
             mainPanel(plotOutput("country"))
