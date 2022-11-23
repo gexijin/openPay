@@ -11,22 +11,19 @@ fluidPage(
 
 
   # Application title
-  titlePanel(h1("Open Payments In South Dakota (2013-2018)",
-    align = "center"
-  )),
-  
 
+  titlePanel("Open Payments In South Dakota (2013-2018)"
+  ),
+  
   # Sidebar with a select input for City
   sidebarLayout(
 
 
-    sidebarPanel(width = 0),
-    fluid = TRUE,
+    sidebarPanel(verbatimTextOutput("txtOutput"), width = 0),
     mainPanel(
 
 
       ## Text Output and Styles
-      verbatimTextOutput("txtOutput"),
       tags$head(
         tags$style("#txtOutput{color: steelblue;
                                  font-size: 18px;
@@ -67,6 +64,11 @@ fluidPage(
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
         ),
+        tabPanel(
+          "Total Payment and Payment Type",
+          verbatimTextOutput("Emmatxt")
+
+        ),        
         tabPanel(
           "Payment Summaries",
           verbatimTextOutput("Gracetxt")

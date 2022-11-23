@@ -1,0 +1,24 @@
+{
+    "id": "EBDD25AB",
+    "path": "~/GitHub/openPay/server.R",
+    "project_path": "server.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1669150560980.0,
+    "source_on_save": false,
+    "relative_order": 3,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1668719566,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1668719566,
+    "read_only": false,
+    "read_only_alternatives": []
+}

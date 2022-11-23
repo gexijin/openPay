@@ -23,9 +23,14 @@ server <- function(input, output, session) {
     paste0("Amount: For each zipcode, a cumulative total of the dollar amount
            from every payment over the years 2013-18.")
   })
+
   output$Gracetxt <- renderText({
     paste0("Summary Payments: Summary statistics for payments in each category 
           of doctor for each year from 2013 to 2018.")
+
+  output$Emmatxt <- renderText({
+    paste0("Total Payment Amount by Payment Type and Profession")
+
   })
 
 

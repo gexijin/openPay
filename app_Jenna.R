@@ -22,7 +22,6 @@ cities <- list("SIOUX FALLS", "RAPID CITY", "PIERRE", "WATERTOWN","VERMILLION",
 mapdata <- read_csv("zippy.csv")
 
 
-
 # Define UI for application that draws a histogram
 ui <- fluidPage(
 
@@ -83,7 +82,8 @@ ui <- fluidPage(
             tabPanel("Totaled Payment Amounts, by Zipcode"
                      , plotOutput("plot2")
                      , verbatimTextOutput("txtOutput3")
-                     )
+                     ),
+            tabPanel("Marie's tab")
                     ),
           width = 12
           
