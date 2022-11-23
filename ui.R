@@ -4,12 +4,14 @@
 
 library(shiny)
 library(plotly)
+library(DT)
 
 # Define UI for application that draws a histogram
 fluidPage(
 
 
   # Application title
+
   titlePanel("Open Payments In South Dakota (2013-2018)"
   ),
   
@@ -65,6 +67,11 @@ fluidPage(
         tabPanel(
           "Total Payment and Payment Type",
           verbatimTextOutput("Emmatxt")
+
+        ),        
+        tabPanel(
+          "Payment Summaries",
+          verbatimTextOutput("Gracetxt")
         )
       ),
       width = 12
