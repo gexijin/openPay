@@ -84,7 +84,7 @@ fluidPage(
             mainPanel(plotOutput("country"))
           ),
           verbatimTextOutput("txtOutput4")
-         )
+         ),
         tabPanel(
           "Total Payment and Payment Type",
           verbatimTextOutput("Emmatxt")
