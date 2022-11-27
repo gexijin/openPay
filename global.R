@@ -50,3 +50,15 @@ df2$'Physician_Primary_Type' <- as.factor(df2$'Physician_Primary_Type')
 df2$'Form_of_Payment_or_Transfer_of_Value' <- as.factor(df2$'Form_of_Payment_or_Transfer_of_Value')
 df2$'Related_Product_Indicator' <- as.factor(df2$'Related_Product_Indicator')
 df2$'Charity_Indicator' <- as.factor(df2$'Charity_Indicator')
+
+
+#for Natalie's bar graph
+library(dplyr)
+paymentdata <- read_csv("Open_Payment_south_dakota_2013-18.csv", 
+      col_types = cols(total_amount_of_payment_usdollars = col_number(), 
+      program_year = col_number()))
+payment <- paymentdata %>%
+  filter(paymentdata$total_amount_of_payment_usdollars > 1)
+payment$year <- substr(payment$date_of_payment, 1, 4) 
+min(payment$year)
+payment$physician_primary_type <- as.factor(payment$physician_primary_type)

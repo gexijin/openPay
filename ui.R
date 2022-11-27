@@ -8,21 +8,21 @@ library(DT)
 
 # Define UI for application that draws a histogram
 fluidPage(
-
-
+  
+  
   # Application title
-
+  
   titlePanel("Open Payments In South Dakota (2013-2018)"
   ),
   
   # Sidebar with a select input for City
   sidebarLayout(
-
-
+    
+    
     sidebarPanel(verbatimTextOutput("txtOutput"), width = 0),
     mainPanel(
-
-
+      
+      
       ## Text Output and Styles
       tags$head(
         tags$style("#txtOutput{color: steelblue;
@@ -47,8 +47,8 @@ fluidPage(
                                  }"),
         tags$style("#city{font-size: 17px;}")
       ),
-
-
+      
+      
       ## Tabs Panel
       tags$head(
         tags$style(
@@ -69,22 +69,36 @@ fluidPage(
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
         ),
-
+        
         tabPanel("Payments by Country",
-          sidebarLayout(
-            sidebarPanel(
-              titlePanel("Payments by Country"),
-              selectInput("predictors", h3("Select Variable"),
-                          choices = c('Physician_Primary_Type',
-                                      'Related_Product_Indicator',
-                                      'Charity_Indicator',
-                                      'Form_of_Payment_or_Transfer_of_Value')
-                          )
-            ),
-            mainPanel(plotOutput("country"))
+                 sidebarLayout(
+                   sidebarPanel(
+                     titlePanel("Payments by Country"),
+                     selectInput("predictors", h3("Select Variable"),
+                                 choices = c('Physician_Primary_Type',
+                                             'Related_Product_Indicator',
+                                             'Charity_Indicator',
+                                             'Form_of_Payment_or_Transfer_of_Value')
+                     )
+                   ),
+                   mainPanel(plotOutput("country"))
+                 ),
+                 verbatimTextOutput("txtOutput4")
+        ),
+        tabPanel("Comparison of Physician Types"),
+        sidebarLayout(
+          sidebarPanel(
+            titlePanel("Payments by Physician Type"),
+            selectInput(
+              inputId = "SelectDr",
+              label = "Select Desired Physician Type(s)",
+              choices = unique(payment$physician_primary_type),
+              multiple = TRUE
+            )
           ),
-          verbatimTextOutput("txtOutput4")
-         ),
+          mainPanel(
+            plotOutput("distPlot"))
+        ),
         tabPanel(
           "Total Payment and Payment Type",
           verbatimTextOutput("Emmatxt")
