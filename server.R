@@ -10,7 +10,7 @@ server <- function(input, output, session) {
 
 
 
-  ## Text Outputs
+## Text Outputs
   output$txtOutput <- renderText({
     paste0("Open Payments: Payments that drug & medical device companies 
            make to covered recipients (physicians, nurses, etc). ")
@@ -35,6 +35,10 @@ server <- function(input, output, session) {
   output$Emmatxt <- renderText({
     paste0("Total Payment Amount by Payment Type and Profession")
 
+  })
+  output$Marietxt <- renderText({
+    paste0("Total Payments received by each physician")
+    
   })
 
 
@@ -149,4 +153,24 @@ server <- function(input, output, session) {
     
   })
 
+  ## Interactive plotly for physician totals, Marie
+  output$MariePlotly <- renderPlotly({
+    # initiate data values
+    city <- input$city
+    
+    # Histogram of total payment per physician
+    payment_totals <-
+      ggplot(phys_amount, aes(Total, na.rm=TRUE)) +
+      geom_histogram(data=subset(phys_amount, 
+                                 City==city & 
+                                   !is.na(Total) &
+                                   Total > 1),
+                     fill="blue", 
+                     bins=10000) +
+      labs(title="Total payments ($) received per physician") + 
+      xlab("Total payments received ($)") 
+    
+    ggplotly(payment_totals)
+  })
+  
 }

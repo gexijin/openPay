@@ -59,13 +59,13 @@ fluidPage(
       tabsetPanel(
         type = "tabs",
         tabPanel(
-          "Nature of Payments, by City",
+          "Nature of Payments",
           uiOutput("city"),
           plotlyOutput("donut_plot"),
           verbatimTextOutput("txtOutput2")
         ),
         tabPanel(
-          "Totaled Payment Amounts, by Zipcode",
+          "Payments by Zipcode",
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
         ),
@@ -92,6 +92,26 @@ fluidPage(
         tabPanel(
           "Payment Summaries",
           verbatimTextOutput("Gracetxt")
+        ),
+        ### Tab for total payments by physician, Marie
+        tabPanel(
+          "Payments by physician",
+          verbatimTextOutput("Marietxt"),
+          sidebarLayout(
+            sidebarPanel(
+              titlePanel("Total payments received per physician"),
+              selectInput("city",
+                          h3("City of interest:"),
+                          choices = c("SIOUX FALLS",
+                                      "BROOKINGS",
+                                      "ABERDEEN",
+                                      "PINE RIDGE",
+                                      "GROTON",
+                                      "RAPID CITY"))
+              ),
+              mainPanel(plotlyOutput("MariePlotly"))
+          ),
+          
         )
       ),
       width = 12
