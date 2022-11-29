@@ -150,5 +150,25 @@ server <- function(input, output, session) {
             guides(fill = guide_legend(title = "Country"))
     
   })
+  
+    ## Interactive plotly for physician totals, Marie
+  output$MariePlotly <- renderPlotly({
+    # initiate data values
+    city <- input$city
+    
+    # Histogram of total payment per physician
+    payment_totals <-
+      ggplot(phys_amount, aes(Total, na.rm=TRUE)) +
+      geom_histogram(data=subset(phys_amount, 
+                                 City==city & 
+                                   !is.na(Total) &
+                                   Total > 1),
+                     fill="blue", 
+                     bins=10000) +
+      labs(title="Total payments ($) received per physician") + 
+      xlab("Total payments received ($)") 
+    
+    ggplotly(payment_totals)
+  })
 
 }
