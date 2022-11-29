@@ -119,13 +119,34 @@ fluidPage(
               mainPanel(plotlyOutput("MariePlotly"))
           )
           
-          
+
         ),
+        
+        
+        ###Jakob's Addition
+        
+        tabPanel("Payment Over Time", 
+                 sidebarLayout(
+                   sidebarPanel(
+                     
+                     titlePanel("Payment Over Time"),
+                     
+                     selectInput("Year", h3("Years"),
+                                 choices = c('All', '2013', '2014', '2015',
+                                             '2016', '2017', '2018'))
+                   ),
+                   mainPanel(plotOutput("jfplot", click = "plot_click"),
+                   tableOutput("jfdatatable"))
+                 )
+        ),
+        
+
         tabPanel(
           "About",
           verbatimTextOutput("Abouttxt")
 
         )
+
       ),
       width = 12
     )
