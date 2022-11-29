@@ -136,7 +136,9 @@ server <- function(input, output, session) {
       theme(axis.text.y = element_text(size = 15),
             axis.title.y = element_text(size = 20),
             axis.title.x = element_blank(),
-            axis.text.x = element_blank()) +
+            axis.text.x = element_blank(),
+            legend.text = element_text(size = 15),
+            legend.title = element_text(size = 15)) +
       labs(y = "Payment ($US)")
   })
 }
