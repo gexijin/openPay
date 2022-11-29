@@ -11,10 +11,7 @@ server <- function(input, output, session) {
 
 
   ## Text Outputs
-  output$txtOutput <- renderText({
-    paste0("Open Payments: Payments that drug & medical device companies 
-           make to covered recipients (physicians, nurses, etc). ")
-  })
+
   output$txtOutput2 <- renderText({
     paste0("Nature of Payments: Categories describing what form or type 
            of payment was made.")
@@ -34,7 +31,12 @@ server <- function(input, output, session) {
   })
   output$Emmatxt <- renderText({
     paste0("Total Payment Amount by Payment Type and Profession")
-
+  })
+  
+  output$Abouttxt <- renderText({
+    paste0("Open Payments: Payments that drug & medical device companies 
+           make to covered recipients (physicians, nurses, etc). 
+           Learn more at https://www.cms.gov/openpayments")
   })
 
 
