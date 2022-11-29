@@ -88,8 +88,29 @@ fluidPage(
         tabPanel(
            "About",
            verbatimTextOutput("Abouttxt")
+        ),
+        ### Tab for total payments by physician, Marie
+        tabPanel(
+          "Payments by physician",
+          verbatimTextOutput("Marietxt"),
+          sidebarLayout(
+            sidebarPanel(
+              titlePanel("Total payments received per physician"),
+              selectInput("city",
+                          h3("City of interest:"),
+                          choices = c("SIOUX FALLS",
+                                      "BROOKINGS",
+                                      "ABERDEEN",
+                                      "PINE RIDGE",
+                                      "GROTON",
+                                      "RAPID CITY"))
+              ),
+              mainPanel(plotlyOutput("MariePlotly"))
+          )
+          
         )
       ),
       width = 12
     )
 )
+

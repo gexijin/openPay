@@ -26,6 +26,7 @@ cities <- list(
 ## for map plot
 mapdata <- read_csv("zippy.csv")
 
+
 ##Caleb
 ### for box plot
 df <- read_csv("calebpayment.csv") # only making payment country & payment total
@@ -50,3 +51,25 @@ df2$'Physician_Primary_Type' <- as.factor(df2$'Physician_Primary_Type')
 df2$'Form_of_Payment_or_Transfer_of_Value' <- as.factor(df2$'Form_of_Payment_or_Transfer_of_Value')
 df2$'Related_Product_Indicator' <- as.factor(df2$'Related_Product_Indicator')
 df2$'Charity_Indicator' <- as.factor(df2$'Charity_Indicator')
+
+
+#############
+# Uses Hanna's full data frame
+
+# Create single name variable
+total_pay_data$physician_full_name <- 
+  paste(total_pay_data$physician_first_name,
+        total_pay_data$physician_last_name,
+        sep = " ")
+
+# Total payments received by each physician
+phys_amount <- aggregate(total_pay_data$total_amount_of_payment_usdollars, 
+                         by = list(total_pay_data$physician_full_name,
+                                   total_pay_data$recipient_city),
+                         FUN = sum)
+
+# Rename columns in physician amounts data frame
+phys_amount <- phys_amount %>%
+  rename(Physician = Group.1,
+         City = Group.2,
+         Total = x)
