@@ -15,21 +15,13 @@ fluidPage(
   titlePanel("Doctor's Payments In South Dakota (2013-2018)"
   ),
   
-  # Sidebar with a select input for City
-  sidebarLayout(
+  # Main Panel
 
-
-    sidebarPanel(verbatimTextOutput("txtOutput"), width = 0),
     mainPanel(
 
 
       ## Text Output and Styles
       tags$head(
-        tags$style("#txtOutput{color: steelblue;
-                                 font-size: 18px;
-                                 font-style: bold;
-                                 font-family: Arial;
-                                 }"),
         tags$style("#txtOutput2{color: steelblue;
                                  font-size: 17px;
                                  font-style: bold;
@@ -100,5 +92,4 @@ fluidPage(
       ),
       width = 12
     )
-  )
 )
