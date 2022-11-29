@@ -59,18 +59,18 @@ fluidPage(
       tabsetPanel(
         type = "tabs",
         tabPanel(
-          "Nature of Payments, by City",
+          "City",
           uiOutput("city"),
           plotlyOutput("donut_plot"),
           verbatimTextOutput("txtOutput2")
         ),
         tabPanel(
-          "Totaled Payment Amounts, by Zipcode",
+          "Zipcode",
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
         ),
 
-        tabPanel("Payments by Country",
+        tabPanel("Country",
           sidebarLayout(
             sidebarPanel(
               titlePanel("Payments by Country"),
@@ -86,11 +86,11 @@ fluidPage(
           verbatimTextOutput("txtOutput4")
          ),
         tabPanel(
-          "Total Payment and Payment Type",
+          "Total & Type",
           verbatimTextOutput("Emmatxt")
         ),        
         tabPanel(
-          "Payment Summaries",
+          "Summaries",
           verbatimTextOutput("Gracetxt")
         )
       ),
