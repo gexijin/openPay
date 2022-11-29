@@ -63,9 +63,8 @@ df2$'Related_Product_Indicator' <- as.factor(df2$'Related_Product_Indicator')
 df2$'Charity_Indicator' <- as.factor(df2$'Charity_Indicator')
 
 
-#############
-# Uses Hanna's full data frame
 
+### New variables for the physician totals
 # Create single name variable
 total_pay_data$physician_full_name <- 
   paste(total_pay_data$physician_first_name,

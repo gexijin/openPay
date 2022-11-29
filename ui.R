@@ -102,12 +102,7 @@ fluidPage(
           verbatimTextOutput("Gracetxt")
         ),
         tabPanel(
-           "About",
-           verbatimTextOutput("Abouttxt")
-        ),
-        ### Tab for total payments by physician, Marie
-        tabPanel(
-          "Payments by physician",
+          "Payments by Physician",
           verbatimTextOutput("Marietxt"),
           sidebarLayout(
             sidebarPanel(
@@ -124,6 +119,11 @@ fluidPage(
               mainPanel(plotlyOutput("MariePlotly"))
           )
           
+          
+        ),
+        tabPanel(
+          "About",
+          verbatimTextOutput("Abouttxt")
 
         )
       ),
