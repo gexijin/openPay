@@ -32,11 +32,19 @@ fluidPage(
                                  font-style: bold;
                                  font-family: Arial;
                                  }"),
+
+        tags$style("#txtOutput_Hannah{color: steelblue;
+                                      font-size: 17px;
+                                      font-style: bold;
+                                      font-family: Arial;
+                                      }"),
+
         tags$style("#txtOutput4{color: steelblue;
                                  font-size: 17px;
                                  font-style: bold;
                                  font-family: Arial;
                                  }"),
+
         tags$style("#city{font-size: 17px;}")
       ),
 
@@ -61,6 +69,14 @@ fluidPage(
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
         ),
+
+        tabPanel(
+          "Years",
+          uiOutput("year"),
+          plotOutput("violin_plot"),
+          verbatimTextOutput("txtOutput_Hannah")
+        ),
+
 
         tabPanel("Country",
           sidebarLayout(
@@ -108,6 +124,7 @@ fluidPage(
         tabPanel(
           "About",
           verbatimTextOutput("Abouttxt")
+
         )
       ),
       width = 12

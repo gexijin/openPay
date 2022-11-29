@@ -52,6 +52,10 @@ server <- function(input, output, session) {
   output$city <- renderUI({
     selectInput("city", "Select City", choices = cities)
   })
+  ## 'Select Year' Output
+  output$year <- renderUI({
+    selectInput("year", "Select Year", choices = 2013:2018)
+  })
 
 
 
@@ -141,6 +145,25 @@ server <- function(input, output, session) {
     )
   })
   
+
+  output$violin_plot <- renderPlot({
+    
+    # Make the years match up from data
+    Filtered <- filter(Open_Hannah, year %in% input$year)
+    
+    # add the violin plot
+    ggplot(Filtered, 
+           aes_string(x = input$year, y = "total_amount_of_payment_usdollars")) +
+      geom_violin(aes(fill = recipient_city)) +
+      theme(axis.text.y = element_text(size = 15),
+            axis.title.y = element_text(size = 20),
+            axis.title.x = element_blank(),
+            axis.text.x = element_blank(),
+            legend.text = element_text(size = 15),
+            legend.title = element_text(size = 15)) +
+      labs(y = "Payment ($US)")
+  })
+
   
 
   output$country <- renderPlot({
@@ -176,5 +199,6 @@ server <- function(input, output, session) {
     
     ggplotly(payment_totals)
   })
+
 
 }
