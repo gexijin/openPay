@@ -12,24 +12,16 @@ fluidPage(
 
   # Application title
 
-  titlePanel("Open Payments In South Dakota (2013-2018)"
+  titlePanel("Doctor's Payments In South Dakota (2013-2018)"
   ),
   
-  # Sidebar with a select input for City
-  sidebarLayout(
+  # Main Panel
 
-
-    sidebarPanel(verbatimTextOutput("txtOutput"), width = 0),
     mainPanel(
 
 
       ## Text Output and Styles
       tags$head(
-        tags$style("#txtOutput{color: steelblue;
-                                 font-size: 18px;
-                                 font-style: bold;
-                                 font-family: Arial;
-                                 }"),
         tags$style("#txtOutput2{color: steelblue;
                                  font-size: 17px;
                                  font-style: bold;
@@ -59,18 +51,18 @@ fluidPage(
       tabsetPanel(
         type = "tabs",
         tabPanel(
-          "Nature of Payments",
+          "City",
           uiOutput("city"),
           plotlyOutput("donut_plot"),
           verbatimTextOutput("txtOutput2")
         ),
         tabPanel(
-          "Payments by Zipcode",
+          "Zipcode",
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
         ),
 
-        tabPanel("Payments by Country",
+        tabPanel("Country",
           sidebarLayout(
             sidebarPanel(
               titlePanel("Payments by Country"),
@@ -86,12 +78,16 @@ fluidPage(
           verbatimTextOutput("txtOutput4")
          ),
         tabPanel(
-          "Total Payment and Payment Type",
+          "Total & Type",
           verbatimTextOutput("Emmatxt")
         ),        
         tabPanel(
-          "Payment Summaries",
+          "Summaries",
           verbatimTextOutput("Gracetxt")
+        ),
+        tabPanel(
+           "About",
+           verbatimTextOutput("Abouttxt")
         ),
         ### Tab for total payments by physician, Marie
         tabPanel(
@@ -110,11 +106,11 @@ fluidPage(
                                       "RAPID CITY"))
               ),
               mainPanel(plotlyOutput("MariePlotly"))
-          ),
+          )
           
         )
       ),
       width = 12
     )
-  )
 )
+

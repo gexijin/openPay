@@ -10,11 +10,8 @@ server <- function(input, output, session) {
 
 
 
-## Text Outputs
-  output$txtOutput <- renderText({
-    paste0("Open Payments: Payments that drug & medical device companies 
-           make to covered recipients (physicians, nurses, etc). ")
-  })
+  ## Text Outputs
+
   output$txtOutput2 <- renderText({
     paste0("Nature of Payments: Categories describing what form or type 
            of payment was made.")
@@ -34,11 +31,12 @@ server <- function(input, output, session) {
   })
   output$Emmatxt <- renderText({
     paste0("Total Payment Amount by Payment Type and Profession")
-
   })
-  output$Marietxt <- renderText({
-    paste0("Total Payments received by each physician")
-    
+  
+  output$Abouttxt <- renderText({
+    paste0("Open Payments: Payments that drug & medical device companies 
+           make to covered recipients (physicians, nurses, etc). 
+           Learn more at https://www.cms.gov/openpayments")
   })
 
 
@@ -152,8 +150,8 @@ server <- function(input, output, session) {
             guides(fill = guide_legend(title = "Country"))
     
   })
-
-  ## Interactive plotly for physician totals, Marie
+  
+    ## Interactive plotly for physician totals, Marie
   output$MariePlotly <- renderPlotly({
     # initiate data values
     city <- input$city
@@ -172,5 +170,5 @@ server <- function(input, output, session) {
     
     ggplotly(payment_totals)
   })
-  
+
 }
