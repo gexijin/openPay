@@ -73,3 +73,13 @@ phys_amount <- phys_amount %>%
   rename(Physician = Group.1,
          City = Group.2,
          Total = x)
+
+
+
+###################
+#Jakob's addition
+
+jfpay <- read.csv("jfpay.csv", stringsAsFactors=TRUE)
+jfpay3 <- jfpay[-c(1)]
+jfpay3$date <- as.Date(jfpay3$date, "%Y-%m-%d")
+jfpay3$year <- as.character(jfpay3$year)

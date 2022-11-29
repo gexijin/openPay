@@ -170,5 +170,54 @@ server <- function(input, output, session) {
     
     ggplotly(payment_totals)
   })
+  
+  
+  
+  ################
+  #Jakob's Addition
+  
+  output$jfplot <- renderPlot({
+    
+    if(input$Year == 'All'){
+      ggplot(jfpay3, aes(x=date, y=Payment)) + geom_point() + 
+        xlab("Time") + scale_x_date(date_labels = "%Y", date_breaks = "1 year") +
+        theme(axis.title.x = element_text(size = 16),
+              axis.text.x = element_text(size = 12),
+              axis.title.y = element_text(size = 16),
+              axis.text.y = element_text(size = 16))
+    }
+    else{
+      
+      tmpstart <- "-01-01"
+      tmpend <- "-12-31"
+      
+      str1 <- paste(input$Year, tmpstart, sep="")
+      str2 <- paste(input$Year, tmpend, sep="")
+      
+      row.storer = NULL
+      
+      for (i in 1:length(jfpay3$date)){
+        if (jfpay3$date[i] > str1 && jfpay3$date[i] < str2){
+          row.storer = c(row.storer, i)
+        }
+      }
+      
+      tmp <- jfpay3[row.storer,]
+      
+      ggplot(tmp, aes(x=date, y=Payment)) + geom_point() + 
+        xlab(input$Year) + scale_x_date(date_labels = "%b", date_breaks = "1 month") +
+        theme(axis.title.x = element_text(size = 16),
+              axis.text.x = element_text(size = 16),
+              axis.title.y = element_text(size = 16),
+              axis.text.y = element_text(size = 16))
+    }
+    
+  })
+  
+  output$jfdatatable <- renderTable({
+    
+    nearPoints(jfpay3, input$plot_click, xvar = "date", yvar = "Payment")
+    
+  })
 
 }
