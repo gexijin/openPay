@@ -1,0 +1,223 @@
+#Jakob Fossen
+#Assignment 10
+#Shiny Stuff
+
+
+pay <- read.csv("Data Sets/Open_Payment_south_dakota_2013-18.csv",
+                header = T)
+
+
+pay$recipient_city <- as.factor(pay$recipient_city)
+pay$recipient_state <- as.factor(pay$recipient_state)
+pay$physician_primary_type <- as.factor(pay$physician_primary_type)
+pay$physician_license_state_code1 <- as.factor(pay$physician_license_state_code1)
+pay$number_of_payments_included_in_total_amount <- 
+  as.numeric(pay$number_of_payments_included_in_total_amount)
+pay$form_of_payment_or_transfer_of_value <- as.factor(pay$form_of_payment_or_transfer_of_value)
+pay$nature_of_payment_or_transfer_of_value <- as.factor(pay$nature_of_payment_or_transfer_of_value)
+pay$third_party_payment_recipient_indicator <- as.factor(pay$third_party_payment_recipient_indicator)
+
+#time
+pay$year <- substr(pay$date_of_payment, 1, 4) 
+pay$date <- substr(pay$date_of_payment, 1, 10)
+pay$date <- as.Date(pay$date, "%Y-%m-%d")
+
+
+#making a less cluttered data frame
+pay2 <- pay[, c('recipient_city',
+                'physician_primary_type', 
+                'physician_license_state_code1',
+                'total_amount_of_payment_usdollars', 'date', 'year',
+                'number_of_payments_included_in_total_amount',
+                'form_of_payment_or_transfer_of_value',
+                'nature_of_payment_or_transfer_of_value',
+                'third_party_payment_recipient_indicator')]
+
+
+names(pay2)[names(pay2) == 'total_amount_of_payment_usdollars'] <- 'Payment'
+names(pay2)[names(pay2) == 'physician_license_state_code1'] <- 'Licensed_State'
+names(pay2)[names(pay2) == 'physician_primary_type'] <- 'Primary_Type'
+names(pay2)[names(pay2) == 'form_of_payment_or_transfer_of_value'] <- 'Payment_Form'
+names(pay2)[names(pay2) == 'nature_of_payment_or_transfer_of_value'] <- 'Payment_Nature'
+names(pay2)[names(pay2) == 'third_party_payment_recipient_indicator'] <- 'Third_Party_Payment'
+names(pay2)[names(pay2) == 'number_of_payments_included_in_total_amount'] <- 'Number_of_Payments'
+
+
+#for viewing the data set
+pay3 <- pay2[, c('recipient_city',
+                'Primary_Type',
+                'Payment', 
+                'date', 'year',
+                'Number_of_Payments',
+                'Payment_Form',
+                'Payment_Nature',
+                'Third_Party_Payment')]
+
+
+#filtering payments less than a dollar
+row.storer = NULL
+
+for (i in 1:length(pay2$Payment)){
+  if (pay2$Payment[i] < 1){
+    row.storer = c(row.storer, i)
+  }
+}
+
+pay2 <- pay2[-row.storer,]
+
+
+#making the pay3 data set smaller so it takes less time to plot
+
+row.storer = NULL
+
+for (i in 1:length(pay3$Payment)){
+  if (pay3$Payment[i] < 20){
+    row.storer = c(row.storer, i)
+  }
+}
+
+pay3 <- pay3[-row.storer,]
+
+#adding different transformations to the data set
+pay2$Log <- log(pay2$Payment)
+
+
+
+#shiny app stuff
+library(shiny)
+library(ggplot2)
+
+
+ui <- fluidPage(
+  
+  #Navbar structure for UI
+  navbarPage("Payment Stats",
+            tabPanel("Money Overview", fluid = TRUE,
+                      
+                      sidebarLayout(
+                        sidebarPanel(
+                          
+                          titlePanel("Desired Graph Characteristics"),
+                      
+                          sliderInput("bins",
+                                      "Number of bins:",
+                                      min = 1,
+                                      max = 100,
+                                      value = 30
+                          ),
+                          selectInput("Type", h3("Transformation"),
+                                      choices = c('Payment', 'Log')
+                          )
+                      ),
+                      mainPanel(plotOutput("plot1"))
+                  )
+             ),
+             
+             tabPanel("Categorical Stuff", fluid = TRUE,
+                      
+                      sidebarLayout(
+                        sidebarPanel(
+                          
+                          titlePanel("Varible Histograms"),
+                          
+                          selectInput("yaxis", h3("Y Axis"),
+                                      choices = c('Primary_Type',
+                                                  'Payment_Form',
+                                                  'Third_Party_Payment', 
+                                                  'Number_of_Payments')
+                          )
+                        ),
+                        mainPanel(plotOutput("plot2"))
+                      )
+             ),
+            
+            tabPanel("Time Stuff", fluid = TRUE,
+                     
+                     sidebarLayout(
+                       sidebarPanel(
+                         
+                         titlePanel("Payment Over Time"),
+                         
+                         selectInput("Year", h3("Years"),
+                           choices = c('All', '2013', '2014', '2015',
+                                       '2016', '2017', '2018'))
+                       ),
+                       mainPanel(plotOutput("plot3", click = "plot_click"),
+                                 tableOutput("data"))
+                     )
+            )
+  )
+)
+
+
+server <- function(input, output) {
+  
+  output$plot1 <- renderPlot({
+    
+    ggplot(pay2, aes_string(input$Type)) + 
+      geom_histogram(fill = "blue", bins = input$bins + 1) +
+      theme(axis.title.x = element_text(size = 16),
+            axis.text.x = element_text(size = 14),
+            axis.title.y = element_text(size = 16))
+    
+  }, height = 600)
+  
+  output$plot2 <- renderPlot({
+    
+    ggplot(pay2, aes_string(input$yaxis, 'Payment')) + 
+      geom_point(fill = "blue") +
+      theme(axis.title.x = element_text(size = 16),
+            axis.text.x = element_text(angle = 30, vjust = 0, hjust = .1, size = 16),
+            axis.title.y = element_text(size = 16),
+            axis.text.y = element_text(size = 16))
+    
+  }, height = 600)
+  
+  output$plot3 <- renderPlot({
+    
+    #unnecessarily complicated way of categorizing time
+    if(input$Year == 'All'){
+      ggplot(pay3, aes(x=date, y=Payment)) + geom_point() + 
+        xlab("Time") + scale_x_date(date_labels = "%Y", date_breaks = "1 year") +
+        theme(axis.title.x = element_text(size = 16),
+              axis.text.x = element_text(size = 12),
+              axis.title.y = element_text(size = 16),
+              axis.text.y = element_text(size = 16))
+    }
+    else{
+      
+      tmpstart <- "-01-01"
+      tmpend <- "-12-31"
+      
+      str1 <- paste(input$Year, tmpstart, sep="")
+      str2 <- paste(input$Year, tmpend, sep="")
+      
+      row.storer = NULL
+      
+      for (i in 1:length(pay3$date)){
+        if (pay3$date[i] > str1 && pay3$date[i] < str2){
+          row.storer = c(row.storer, i)
+        }
+      }
+      
+      tmp <- pay3[row.storer,]
+      
+      ggplot(tmp, aes(x=date, y=Payment)) + geom_point() + 
+        xlab(input$Year) + scale_x_date(date_labels = "%b", date_breaks = "1 month") +
+        theme(axis.title.x = element_text(size = 16),
+              axis.text.x = element_text(size = 16),
+              axis.title.y = element_text(size = 16),
+              axis.text.y = element_text(size = 16))
+    }
+    
+  })
+  
+  output$data <- renderTable({
+    
+    nearPoints(pay3, input$plot_click, xvar = "date", yvar = "Payment")
+    
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)

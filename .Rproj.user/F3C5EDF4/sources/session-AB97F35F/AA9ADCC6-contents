@@ -1,0 +1,125 @@
+# Libraries ----
+library(tidyverse)
+library(explore)
+library(lubridate)
+library(shiny)
+
+# Data ----
+df <- read_csv("open_payment_sd_2013-18.csv")
+
+# Cleaning ---- 
+
+# Time series stuff
+df$date_of_payment <- as_date(df$date_of_payment, 
+                              tz = NULL)
+df$year <- strftime(df$date_of_payment, "%Y")
+df$year <- as.factor(df$year)
+
+df3 <- filter(df, total_amount_of_payment_usdollars < 150) %>% 
+  drop_na(physician_primary_type)
+
+df3 <- df3 %>% 
+  select("physician_primary_type",
+         "year",
+         "related_product_indicator",
+         "form_of_payment_or_transfer_of_value",
+         "change_type",
+         "third_party_payment_recipient_indicator",
+         "charity_indicator",
+         "applicable_manufacturer_or_applicable_gpo_making_payment_country",
+         "nature_of_payment_or_transfer_of_value",
+         "country_of_travel",
+         "total_amount_of_payment_usdollars")
+
+# df for Bar Graph
+dfforeign <- filter(df3, applicable_manufacturer_or_applicable_gpo_making_payment_country != "United States")
+names(dfforeign)[names(dfforeign) == 'applicable_manufacturer_or_applicable_gpo_making_payment_country'] <- 'Applicable Manufacturer/GPO Making Payment'
+names(dfforeign)[names(dfforeign) == 'physician_primary_type'] <- 'Physician Primary Type'
+names(dfforeign)[names(dfforeign) == 'applicable_manufacturer_or_applicable_gpo_making_payment_country'] <- 'Applicable Manufacturer/GPO Making Payment'
+names(dfforeign)[names(dfforeign) == 'year'] <- 'Year'
+names(dfforeign)[names(dfforeign) == 'form_of_payment_or_transfer_of_value'] <- 'Form of Payment/Transfer of Value'
+names(dfforeign)[names(dfforeign) == 'related_product_indicator'] <- 'Related Product Indicator'
+names(dfforeign)[names(dfforeign) == 'change_type'] <- 'Change Type'
+names(dfforeign)[names(dfforeign) == 'third_party_payment_recipient_indicator'] <- '3rd Party Indicator'
+names(dfforeign)[names(dfforeign) == 'charity_indicator'] <- 'Charity Indicator'
+names(dfforeign)[names(dfforeign) == 'nature_of_payment_or_transfer_of_value'] <- 'Nature of Payment'
+names(dfforeign)[names(dfforeign) == 'country_of_travel'] <- 'Country of Travel'
+names(dfforeign)[names(dfforeign) == 'total_amount_of_payment_usdollars'] <- 'Total Payment (USD)'
+
+names(df3)[names(df3) == 'physician_primary_type'] <- 'Physician Primary Type'
+names(df3)[names(df3) == 'applicable_manufacturer_or_applicable_gpo_making_payment_country'] <- 'Applicable Manufacturer/GPO Making Payment'
+names(df3)[names(df3) == 'year'] <- 'Year'
+names(df3)[names(df3) == 'form_of_payment_or_transfer_of_value'] <- 'Form of Payment/Transfer of Value'
+names(df3)[names(df3) == 'related_product_indicator'] <- 'Related Product Indicator'
+names(df3)[names(df3) == 'change_type'] <- 'Change Type'
+names(df3)[names(df3) == 'third_party_payment_recipient_indicator'] <- '3rd Party Indicator'
+names(df3)[names(df3) == 'charity_indicator'] <- 'Charity Indicator'
+names(df3)[names(df3) == 'nature_of_payment_or_transfer_of_value'] <- 'Nature of Payment'
+names(df3)[names(df3) == 'country_of_travel'] <- 'Country of Travel'
+names(df3)[names(df3) == 'total_amount_of_payment_usdollars'] <- 'Total Payment (USD)'
+
+
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+
+    # Application title
+    titlePanel("Where the Money Comes From And Who It Goes To"),
+
+    # Sidebar inputs 
+    sidebarLayout(
+        sidebarPanel(
+            varSelectInput("var1",
+                           "Select Boxplot Variable",
+                           df3),
+            varSelectInput("var2",
+                           "Select Density Variable",
+                           df3),
+            varSelectInput("var3",
+                           "Select Bar Plot Variable",
+                           df3)
+        ),
+
+        # Display plots
+        mainPanel(
+           plotOutput("boxplot"),
+           plotOutput("density"),
+           plotOutput("bar")
+        )
+    )
+)
+
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+  
+  output$boxplot <- renderPlot({
+        ggplot(df3, aes(`Total Payment (USD)`, !!input$var1)) +
+        geom_boxplot(aes(fill = !!input$var1), show.legend = FALSE) +
+      theme(axis.title.y = element_blank(),
+            axis.text.y = element_text(size = 10))
+    })
+  
+  output$density <- renderPlot({
+    ggplot(df3, aes(`Total Payment (USD)`)) +
+      geom_density(aes(fill = !!input$var2), alpha = 0.6) +
+      theme(axis.title.y = element_blank(),
+            axis.text.y = element_blank(), 
+            axis.ticks.y = element_blank(),
+            legend.text = element_text(size = 20),
+            legend.title = element_blank())
+  })
+  
+  output$bar <- renderPlot({
+    ggplot(dfforeign, aes(!!input$var3)) +
+      geom_bar(aes(fill = `Applicable Manufacturer/GPO Making Payment`)) +
+      theme(axis.title.y = element_blank(),
+            axis.text.y = element_blank(), 
+            axis.ticks.y = element_blank(),
+            axis.title.x = element_blank(),
+            axis.text.x = element_text(size = 18),
+            legend.text = element_text(size = 20),
+            legend.title = element_text(size = 17))
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
