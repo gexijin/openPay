@@ -5,9 +5,10 @@ account: sdsucamp
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 7661471
-bundleId: 6525785
+bundleId: 6548472
 url: https://sdsucamp.shinyapps.io/Jenna/
-when: 1668707939.64531
-lastSyncTime: 1668707939.64532
+when: 1669236435.10183
+lastSyncTime: 1669236435.10185
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: .RData|app_Jenna.R
