@@ -12,7 +12,7 @@ fluidPage(
 
   # Application title
 
-  titlePanel("Open Payments In South Dakota (2013-2018)"
+  titlePanel("Doctor's Payments In South Dakota (2013-2018)"
   ),
   
   # Sidebar with a select input for City
