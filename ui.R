@@ -10,8 +10,9 @@ fluidPage(
 
 
   # Application title
-  titlePanel("Open Payments In South Dakota (2013-2018)"
-  ),
+  titlePanel(h1("Open Payments In South Dakota (2013-2018)",
+                align = "center"
+  )),
 
   # Sidebar with a select input for City
   sidebarLayout(
@@ -20,7 +21,6 @@ fluidPage(
     sidebarPanel(width = 0),
     fluid = TRUE,
     mainPanel(
-
 
       ## Text Output and Styles
       verbatimTextOutput("txtOutput"),
@@ -65,11 +65,12 @@ fluidPage(
           verbatimTextOutput("txtOutput3")
         ),
         tabPanel(
-          "Total Payment and Payment Type",
-          verbatimTextOutput("Emmatxt")
+          "Total Payment and Type, by Physician Type",
+          uiOutput("EmmaType"),
+          plotOutput("Emma"),
         )
       ),
-      width = 12
+    width = 12
     )
   )
 )
