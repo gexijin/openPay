@@ -22,30 +22,34 @@ fluidPage(
 
       ## Text Output and Styles
       tags$head(
-        tags$style("#txtOutput2{color: steelblue;
+        tags$style("#txtOutput2{color: black;
                                  font-size: 17px;
                                  font-style: bold;
-                                 font-family: Arial;
+                                 font-family: Times New Roman;
                                  }"),
-        tags$style("#txtOutput3{color: steelblue;
+        tags$style("#txtOutput3{color: black;
                                  font-size: 17px;
                                  font-style: bold;
-                                 font-family: Arial;
+                                 font-family: Times New Roman;
                                  }"),
 
-        tags$style("#txtOutput_Hannah{color: steelblue;
+        tags$style("#txtOutput_Hannah{color: black;
                                       font-size: 17px;
                                       font-style: bold;
-                                      font-family: Arial;
+                                      font-family: Times New Roman;
                                       }"),
 
-        tags$style("#txtOutput4{color: steelblue;
+        tags$style("#txtOutput4{color: black;
                                  font-size: 17px;
                                  font-style: bold;
-                                 font-family: Arial;
+                                 font-family: Times New Roman;
                                  }"),
 
-        tags$style("#city{font-size: 17px;}")
+        tags$style("#city{color: black;
+                                 font-size: 17px;
+                                 font-style: bold;
+                                 font-family: Times New Roman;
+                                 }}")
       ),
 
 
@@ -53,7 +57,11 @@ fluidPage(
       tags$head(
         tags$style(
           type = "text/css",
-          ".nav-tabs {font-size: 18px} "
+          ".nav-tabs {color: black;
+                                 font-size: 19px;
+                                 font-style: bold;
+                                 font-family: Times New Roman;
+                                 }} "
         )
       ),
       tabsetPanel(
