@@ -92,6 +92,10 @@ fluidPage(
         tabPanel(
           "Summaries",
           verbatimTextOutput("Gracetxt")
+        ),
+        tabPanel(
+           "About",
+           verbatimTextOutput("Abouttxt")
         )
       ),
       width = 12
