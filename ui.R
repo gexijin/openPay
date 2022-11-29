@@ -42,6 +42,11 @@ fluidPage(
                                  font-style: bold;
                                  font-family: Arial;
                                  }"),
+        tags$style("#txtOutput_Hannah{color: steelblue;
+                                      font-size: 17px;
+                                      font-style: bold;
+                                      font-family: Arial;
+                                      }"),
         tags$style("#city{font-size: 17px;}")
       ),
 
@@ -65,6 +70,12 @@ fluidPage(
           "Totaled Payment Amounts, by Zipcode",
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
+        ),
+        tabPanel(
+          "Years",
+          uiOutput("year"),
+          plotOutput("violin_plot"),
+          verbatimTextOutput("txtOutput_Hannah")
         )
       ),
       width = 12
