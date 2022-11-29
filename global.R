@@ -18,6 +18,8 @@ total_pay_data$year <- substr(total_pay_data$date_of_payment, 1, 4)
 payment <- read_csv("payment.csv")
 payment$nature.of.payment <- as.factor(payment$nature.of.payment)
 
+total_pay_data <- read_csv("Open_Payment_south_dakota_2013-18.csv")
+
 cities <- list(
   "SIOUX FALLS", "RAPID CITY", "PIERRE", "WATERTOWN", "VERMILLION",
   "ABERDEEN", "CUSTER", "MITCHELL", "SPEARFISH", "BROOKINGS"
@@ -25,6 +27,14 @@ cities <- list(
 
 ## for map plot
 mapdata <- read_csv("zippy.csv")
+
+
+Open_Hannah <- total_pay_data %>%
+  filter(total_amount_of_payment_usdollars >= 1 & total_amount_of_payment_usdollars <= 50) %>%
+  filter(recipient_city %in% c('SIOUX FALLS' , 'RAPID CITY','ABERDEEN', 'BROOKINGS','WATERTOWN'))
+
+Open_Hannah$year <- substr(Open_Hannah$date_of_payment, 1, 4)
+Open_Hannah$year <- as.factor(Open_Hannah$year)
 
 
 ##Caleb
@@ -53,9 +63,8 @@ df2$'Related_Product_Indicator' <- as.factor(df2$'Related_Product_Indicator')
 df2$'Charity_Indicator' <- as.factor(df2$'Charity_Indicator')
 
 
-#############
-# Uses Hanna's full data frame
 
+### New variables for the physician totals
 # Create single name variable
 total_pay_data$physician_full_name <- 
   paste(total_pay_data$physician_first_name,
@@ -83,3 +92,4 @@ jfpay <- read.csv("jfpay.csv", stringsAsFactors=TRUE)
 jfpay3 <- jfpay[-c(1)]
 jfpay3$date <- as.Date(jfpay3$date, "%Y-%m-%d")
 jfpay3$year <- as.character(jfpay3$year)
+

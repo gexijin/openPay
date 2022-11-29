@@ -32,11 +32,19 @@ fluidPage(
                                  font-style: bold;
                                  font-family: Arial;
                                  }"),
+
+        tags$style("#txtOutput_Hannah{color: steelblue;
+                                      font-size: 17px;
+                                      font-style: bold;
+                                      font-family: Arial;
+                                      }"),
+
         tags$style("#txtOutput4{color: steelblue;
                                  font-size: 17px;
                                  font-style: bold;
                                  font-family: Arial;
                                  }"),
+
         tags$style("#city{font-size: 17px;}")
       ),
 
@@ -62,6 +70,14 @@ fluidPage(
           verbatimTextOutput("txtOutput3")
         ),
 
+        tabPanel(
+          "Years",
+          uiOutput("year"),
+          plotOutput("violin_plot"),
+          verbatimTextOutput("txtOutput_Hannah")
+        ),
+
+
         tabPanel("Country",
           sidebarLayout(
             sidebarPanel(
@@ -86,12 +102,7 @@ fluidPage(
           verbatimTextOutput("Gracetxt")
         ),
         tabPanel(
-           "About",
-           verbatimTextOutput("Abouttxt")
-        ),
-        ### Tab for total payments by physician, Marie
-        tabPanel(
-          "Payments by physician",
+          "Payments by Physician",
           verbatimTextOutput("Marietxt"),
           sidebarLayout(
             sidebarPanel(
@@ -108,6 +119,7 @@ fluidPage(
               mainPanel(plotlyOutput("MariePlotly"))
           )
           
+
         ),
         
         
@@ -128,6 +140,13 @@ fluidPage(
                  )
         ),
         
+
+        tabPanel(
+          "About",
+          verbatimTextOutput("Abouttxt")
+
+        )
+
       ),
       width = 12
     )
