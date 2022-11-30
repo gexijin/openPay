@@ -6,9 +6,6 @@ Deployed  [https://sdsucamp.shinyapps.io/Jenna/](https://sdsucamp.shinyapps.io/J
 
 # To contribute
 Fork this repository first. Make changes. After testing, you can submit changes by creating Pull Requests to merge into the **Main branch**. The code at the **Deployed** branch are tested and deployed to the website.
-
-# Bugs and ideas for improvements
-File bug reports at the [Issues tab](https://github.com/gexijin/openPay/issues).  You can also write down any ideas for improvement. If you solve an issue, mark it so by closing the issue.
 1. Create a GitHub account, and login to GitHub.com
 2. Fork  gexijin/openPay as your repository (repo)
 3. Install GitHub Desktop
@@ -20,6 +17,10 @@ File bug reports at the [Issues tab](https://github.com/gexijin/openPay/issues).
 9. To keep working, you need to sync your fork from GitHub website, as the main repo might be updated 
 10. To update your local version, use Repository Pull from GitHub desktop.
 11. Repeat steps 5 to 10
+
+# Bugs and ideas for improvements
+File bug reports at the [Issues tab](https://github.com/gexijin/openPay/issues).  You can also write down any ideas for improvement. If you solve an issue, mark it so by closing the issue.
+
 
 
 # Code Structure
