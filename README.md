@@ -15,3 +15,12 @@ Main files for the Shiny App:
 1. **global.R**   This file contains global variables, which are usually created by reading in data files.
 2. **ui.R**   This file defines user interface
 3. **server.R** Server logic, such as functions to generate plots.
+
+# Data files (Some documentation and details needed!!!)
+1. **calebpayment.csv**
+2. **Open_Payment_south_dakota_2013-18.csv**  
+3. **payment.csv**               
+4. **zippy.csv**
+5. **jfpay.csv**         
+6. **Open_Payment_south_dakota_2013-21.csv**
+7. **updated_payment_data.csv**
