@@ -16,7 +16,7 @@ Main files for the Shiny App:
 2. **ui.R**   This file defines user interface
 3. **server.R** Server logic, such as functions to generate plots.
 
-# Data files
+# Data files (Some documentation and details needed!!!)
 1. **calebpayment.csv**
 2. **Open_Payment_south_dakota_2013-18.csv**  
 3. **payment.csv**               
