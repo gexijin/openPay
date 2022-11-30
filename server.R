@@ -274,7 +274,7 @@ server <- function(input, output, session) {
     
   })
   
-}
+
 
   
     ## Interactive plotly for physician totals, Marie
