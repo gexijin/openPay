@@ -281,7 +281,7 @@ server <- function(input, output, session) {
     ## Interactive plotly for physician totals, Marie
   output$MariePlotly <- renderPlotly({
     # initiate data values
-    city <- input$city
+    city <- input$city_marie
     
     # Histogram of total payment per physician
     payment_totals <-
@@ -349,7 +349,7 @@ server <- function(input, output, session) {
   
     
     output$distPlot <- renderPlot({
-      d = payment %>% filter(payment$physician_primary_type %in% input$SelectDr)
+      d = payment_natalie %>% filter(physician_primary_type %in% input$SelectDr)
       ggplot(data = d, mapping = 
                aes(x = d$year, fill = d$physician_primary_type)) +
         labs(x = "Years", y = "Payments Made to Physician(s)", 

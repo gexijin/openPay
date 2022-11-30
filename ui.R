@@ -13,8 +13,7 @@ fluidPage(
   # Application title
   
 
-  titlePanel("Doctor's Payments In South Dakota (2013-2018)"
-  ),
+  titlePanel("Doctor's Payments In South Dakota (2013-2018)"),
   
   # Main Panel
 
@@ -87,10 +86,9 @@ fluidPage(
         ),
 
         
-        tabPanel("Payments by Country",
+        tabPanel("Country",
                  sidebarLayout(
                    sidebarPanel(
-                     titlePanel("Payments by Country"),
                      selectInput("predictors", h3("Select Variable"),
                                  choices = c('Physician_Primary_Type',
                                              'Related_Product_Indicator',
@@ -102,20 +100,22 @@ fluidPage(
                  ),
                  verbatimTextOutput("txtOutput4")
         ),
-        tabPanel("Comparison of Physician Types"),
+        tabPanel("Physician Types",
         sidebarLayout(
           sidebarPanel(
-            titlePanel("Payments by Physician Type"),
             selectInput(
               inputId = "SelectDr",
               label = "Select Desired Physician Type(s)",
-              choices = unique(payment$physician_primary_type),
+              choices = unique(payment_natalie$physician_primary_type),
+              selected = "Medical Doctor",
               multiple = TRUE
             )
 
           ),
           mainPanel(
-            plotOutput("distPlot"))
+            plotOutput("distPlot")
+          )
+        )
         ),
         tabPanel(
           "Total & Type",
@@ -133,7 +133,7 @@ fluidPage(
           sidebarLayout(
             sidebarPanel(
               titlePanel("Total payments received per physician"),
-              selectInput("city",
+              selectInput("city_marie",
                           h3("City of interest:"),
                           choices = c("SIOUX FALLS",
                                       "BROOKINGS",
@@ -178,5 +178,5 @@ fluidPage(
     )
 
   )
-)
+
 
