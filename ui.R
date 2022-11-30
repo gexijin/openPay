@@ -8,44 +8,50 @@ library(DT)
 
 # Define UI for application that draws a histogram
 fluidPage(
-  
-  
+
+
   # Application title
   
-  titlePanel("Open Payments In South Dakota (2013-2018)"
+
+  titlePanel("Doctor's Payments In South Dakota (2013-2018)"
   ),
   
-  # Sidebar with a select input for City
-  sidebarLayout(
-    
-    
-    sidebarPanel(verbatimTextOutput("txtOutput"), width = 0),
+  # Main Panel
+
+
     mainPanel(
       
       
       ## Text Output and Styles
       tags$head(
-        tags$style("#txtOutput{color: steelblue;
-                                 font-size: 18px;
-                                 font-style: bold;
-                                 font-family: Arial;
-                                 }"),
-        tags$style("#txtOutput2{color: steelblue;
+        tags$style("#txtOutput2{color: black;
                                  font-size: 17px;
                                  font-style: bold;
-                                 font-family: Arial;
+                                 font-family: Times New Roman;
                                  }"),
-        tags$style("#txtOutput3{color: steelblue;
+        tags$style("#txtOutput3{color: black;
                                  font-size: 17px;
                                  font-style: bold;
-                                 font-family: Arial;
+                                 font-family: Times New Roman;
                                  }"),
-        tags$style("#txtOutput4{color: steelblue;
+
+        tags$style("#txtOutput_Hannah{color: black;
+                                      font-size: 17px;
+                                      font-style: bold;
+                                      font-family: Times New Roman;
+                                      }"),
+
+        tags$style("#txtOutput4{color: black;
                                  font-size: 17px;
                                  font-style: bold;
-                                 font-family: Arial;
+                                 font-family: Times New Roman;
                                  }"),
-        tags$style("#city{font-size: 17px;}")
+
+        tags$style("#city{color: black;
+                                 font-size: 17px;
+                                 font-style: bold;
+                                 font-family: Times New Roman;
+                                 }}")
       ),
       
       
@@ -53,22 +59,33 @@ fluidPage(
       tags$head(
         tags$style(
           type = "text/css",
-          ".nav-tabs {font-size: 18px} "
+          ".nav-tabs {color: black;
+                                 font-size: 19px;
+                                 font-style: bold;
+                                 font-family: Times New Roman;
+                                 }} "
         )
       ),
       tabsetPanel(
         type = "tabs",
         tabPanel(
-          "Nature of Payments, by City",
+          "City",
           uiOutput("city"),
           plotlyOutput("donut_plot"),
           verbatimTextOutput("txtOutput2")
         ),
         tabPanel(
-          "Totaled Payment Amounts, by Zipcode",
+          "Zipcode",
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
         ),
+        tabPanel(
+          "Years",
+          uiOutput("year"),
+          plotOutput("violin_plot"),
+          verbatimTextOutput("txtOutput_Hannah")
+        ),
+
         
         tabPanel("Payments by Country",
                  sidebarLayout(
@@ -95,20 +112,71 @@ fluidPage(
               choices = unique(payment$physician_primary_type),
               multiple = TRUE
             )
+
           ),
           mainPanel(
             plotOutput("distPlot"))
         ),
         tabPanel(
-          "Total Payment and Payment Type",
+          "Total & Type",
           verbatimTextOutput("Emmatxt")
         ),        
+      tabPanel(
+        "Summaries",
+        uiOutput("SelectYear"),
+        dataTableOutput("Grace_table"),
+        verbatimTextOutput("Gracetxt")
+      ),
         tabPanel(
-          "Payment Summaries",
-          verbatimTextOutput("Gracetxt")
+          "Payments by Physician",
+          verbatimTextOutput("Marietxt"),
+          sidebarLayout(
+            sidebarPanel(
+              titlePanel("Total payments received per physician"),
+              selectInput("city",
+                          h3("City of interest:"),
+                          choices = c("SIOUX FALLS",
+                                      "BROOKINGS",
+                                      "ABERDEEN",
+                                      "PINE RIDGE",
+                                      "GROTON",
+                                      "RAPID CITY"))
+              ),
+              mainPanel(plotlyOutput("MariePlotly"))
+          )
+          
+
+        ),
+        
+        
+        ###Jakob's Addition
+        
+        tabPanel("Payment Over Time", 
+                 sidebarLayout(
+                   sidebarPanel(
+                     
+                     titlePanel("Payment Over Time"),
+                     
+                     selectInput("Year", h3("Years"),
+                                 choices = c('All', '2013', '2014', '2015',
+                                             '2016', '2017', '2018'))
+                   ),
+                   mainPanel(plotOutput("jfplot", click = "plot_click"),
+                   tableOutput("jfdatatable"))
+                 )
+        ),
+        
+
+        tabPanel(
+          "About",
+          verbatimTextOutput("Abouttxt")
+
         )
+
       ),
       width = 12
     )
+
   )
 )
+
