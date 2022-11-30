@@ -9,6 +9,7 @@ library(DT)
 # Define UI for application that draws a histogram
 fluidPage(
 
+
   # Application title
   
 
@@ -19,8 +20,8 @@ fluidPage(
 
 
     mainPanel(
-
-
+      
+      
       ## Text Output and Styles
       tags$head(
         tags$style("#txtOutput2{color: black;
@@ -52,8 +53,8 @@ fluidPage(
                                  font-family: Times New Roman;
                                  }}")
       ),
-
-
+      
+      
       ## Tabs Panel
       tags$head(
         tags$style(
@@ -78,7 +79,6 @@ fluidPage(
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
         ),
-
         tabPanel(
           "Years",
           uiOutput("year"),
@@ -86,22 +86,37 @@ fluidPage(
           verbatimTextOutput("txtOutput_Hannah")
         ),
 
+        
+        tabPanel("Payments by Country",
+                 sidebarLayout(
+                   sidebarPanel(
+                     titlePanel("Payments by Country"),
+                     selectInput("predictors", h3("Select Variable"),
+                                 choices = c('Physician_Primary_Type',
+                                             'Related_Product_Indicator',
+                                             'Charity_Indicator',
+                                             'Form_of_Payment_or_Transfer_of_Value')
+                     )
+                   ),
+                   mainPanel(plotOutput("country"))
+                 ),
+                 verbatimTextOutput("txtOutput4")
+        ),
+        tabPanel("Comparison of Physician Types"),
+        sidebarLayout(
+          sidebarPanel(
+            titlePanel("Payments by Physician Type"),
+            selectInput(
+              inputId = "SelectDr",
+              label = "Select Desired Physician Type(s)",
+              choices = unique(payment$physician_primary_type),
+              multiple = TRUE
+            )
 
-        tabPanel("Country",
-          sidebarLayout(
-            sidebarPanel(
-              titlePanel("Payments by Country"),
-              selectInput("predictors", h3("Select Variable"),
-                          choices = c('Physician_Primary_Type',
-                                      'Related_Product_Indicator',
-                                      'Charity_Indicator',
-                                      'Form_of_Payment_or_Transfer_of_Value')
-                          )
-            ),
-            mainPanel(plotOutput("country"))
           ),
-          verbatimTextOutput("txtOutput4")
-         ),
+          mainPanel(
+            plotOutput("distPlot"))
+        ),
         tabPanel(
           "Total & Type",
           verbatimTextOutput("Emmatxt")
@@ -161,6 +176,7 @@ fluidPage(
       ),
       width = 12
     )
-)
 
+  )
+)
 

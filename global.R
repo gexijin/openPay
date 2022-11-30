@@ -65,6 +65,18 @@ df2$'Charity_Indicator' <- as.factor(df2$'Charity_Indicator')
 
 
 
+#for Natalie's bar graph
+library(dplyr)
+paymentdata_natalie <- read_csv("Open_Payment_south_dakota_2013-18.csv", 
+      col_types = cols(total_amount_of_payment_usdollars = col_number(), 
+      program_year = col_number()))
+payment_natalie <- paymentdata_natalie %>%
+  filter(paymentdata_natalie$total_amount_of_payment_usdollars > 1)
+payment_natalie$year <- substr(payment_natalie$date_of_payment, 1, 4) 
+
+payment_natalie$physician_primary_type <- as.factor(payment_natalie$physician_primary_type)
+
+
 ### New variables for the physician totals
 # Create single name variable
 total_pay_data$physician_full_name <- 
@@ -93,5 +105,6 @@ jfpay <- read.csv("jfpay.csv", stringsAsFactors=TRUE)
 jfpay3 <- jfpay[-c(1)]
 jfpay3$date <- as.Date(jfpay3$date, "%Y-%m-%d")
 jfpay3$year <- as.character(jfpay3$year)
+
 
 

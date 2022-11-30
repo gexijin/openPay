@@ -5,6 +5,7 @@ library(sf) ## Overall handling of sf objects
 library(cartography) ## Plotting maps package
 library(tigris) ## For downloading the zipcode map
 
+
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
 
@@ -345,6 +346,17 @@ server <- function(input, output, session) {
     nearPoints(jfpay3, input$plot_click, xvar = "date", yvar = "Payment")
     
   })
+  
+    
+    output$distPlot <- renderPlot({
+      d = payment %>% filter(payment$physician_primary_type %in% input$SelectDr)
+      ggplot(data = d, mapping = 
+               aes(x = d$year, fill = d$physician_primary_type)) +
+        labs(x = "Years", y = "Payments Made to Physician(s)", 
+             fill = "Physician(s)") +
+        geom_bar(position = 'dodge')
+    })
+    
 
 
 }
