@@ -1,0 +1,13 @@
+name: openPay
+title: openPay
+username:
+account: sdsucamp
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 7773555
+bundleId: 6573182
+url: https://sdsucamp.shinyapps.io/openPay/
+when: 1669825507.13271
+lastSyncTime: 1669825507.13274
+asMultiple: FALSE
+asStatic: FALSE
