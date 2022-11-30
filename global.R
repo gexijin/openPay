@@ -60,6 +60,7 @@ df2$'Applicable_Manufacturer_or_GOP_Making_Payment_Country' <- as.factor(df2$'Ap
 df2$'Physician_Primary_Type' <- as.factor(df2$'Physician_Primary_Type')
 df2$'Form_of_Payment_or_Transfer_of_Value' <- as.factor(df2$'Form_of_Payment_or_Transfer_of_Value')
 df2$'Related_Product_Indicator' <- as.factor(df2$'Related_Product_Indicator')
+
 df2$'Charity_Indicator' <- as.factor(df2$'Charity_Indicator')
 
 
@@ -92,4 +93,5 @@ jfpay <- read.csv("jfpay.csv", stringsAsFactors=TRUE)
 jfpay3 <- jfpay[-c(1)]
 jfpay3$date <- as.Date(jfpay3$date, "%Y-%m-%d")
 jfpay3$year <- as.character(jfpay3$year)
+
 

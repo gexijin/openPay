@@ -9,13 +9,14 @@ library(DT)
 # Define UI for application that draws a histogram
 fluidPage(
 
-
   # Application title
+  
 
   titlePanel("Doctor's Payments In South Dakota (2013-2018)"
   ),
   
   # Main Panel
+
 
     mainPanel(
 
@@ -105,10 +106,12 @@ fluidPage(
           "Total & Type",
           verbatimTextOutput("Emmatxt")
         ),        
-        tabPanel(
-          "Summaries",
-          verbatimTextOutput("Gracetxt")
-        ),
+      tabPanel(
+        "Summaries",
+        uiOutput("SelectYear"),
+        dataTableOutput("Grace_table"),
+        verbatimTextOutput("Gracetxt")
+      ),
         tabPanel(
           "Payments by Physician",
           verbatimTextOutput("Marietxt"),
@@ -159,4 +162,5 @@ fluidPage(
       width = 12
     )
 )
+
 
