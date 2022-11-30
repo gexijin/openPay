@@ -9,6 +9,18 @@ Fork this repository first. Make changes. After testing, you can submit changes 
 
 # Bugs and ideas for improvements
 File bug reports at the [Issues tab](https://github.com/gexijin/openPay/issues).  You can also write down any ideas for improvement. If you solve an issue, mark it so by closing the issue.
+1. Create a GitHub account, and login to GitHub.com
+2. Fork  gexijin/openPay as your repository (repo)
+3. Install GitHub Desktop
+4. Clone repo locally using GitHub Desktop https://github.com/gexijin/openPay.git
+5. Start RStudio and edit
+6. Test and Commit changes
+7. Push to your repo
+8. Pull request: Merge changes into gexijin/openPay
+9. To keep working, you need to sync your fork from GitHub website, as the main repo might be updated 
+10. To update your local version, use Repository Pull from GitHub desktop.
+11. Repeat steps 5 to 10
+
 
 # Code Structure
 Main files for the Shiny App:
