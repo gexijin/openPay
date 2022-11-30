@@ -6,7 +6,7 @@ library(tidyverse)
 
 
 ## for donut plot
-payment <- read_csv("payment.csv")
+payment <- read_csv("updated_payment_data.csv")
 payment$nature.of.payment <- as.factor(payment$nature.of.payment)
 
 cities <- list(
