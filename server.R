@@ -14,7 +14,6 @@ server <- function(input, output, session) {
 
   ## Text Outputs
 
-
   output$txtOutput2 <- renderText({
     paste0("Nature of Payments: Categories describing what form or type 
            of payment was made.")
@@ -28,10 +27,9 @@ server <- function(input, output, session) {
   })
 
 
-  
 
-  output$txtOutput4 <- renderText({
-    paste0("List of countries, except the US, who made payments.")
+  output$Calebtxt <- renderText({
+    paste0("See which countries, except the US, made payments.")
   })
   
 
@@ -48,10 +46,12 @@ server <- function(input, output, session) {
   })
   
 
+  
   output$Marietxt <- renderText({
     paste0("Total Payment Amounts received by each Physician for selected cities.")
   })
   
+
 
   output$Abouttxt <- renderText({
     paste0("Open Payments: Payments that drug & medical device companies 
@@ -80,8 +80,9 @@ server <- function(input, output, session) {
     selectInput("year", "Select Year", choices = 2013:2018)
   })
 
-
-
+  output$predictor <- renderUI({
+    selectInput("predictor", "Select Variable", choices = countrycol)
+  })
 
 
   ## Plot Outputs
@@ -210,18 +211,17 @@ server <- function(input, output, session) {
     plot(Emmaplot)
   }, height = 600, width = 1000)
 
-
   output$country <- renderPlot({
-    ggplot(df2, aes_string(input$predictors)) +
-      geom_bar(aes(fill = df2$'Applicable_Manufacturer_or_GOP_Making_Payment_Country')) +
+    ggplot(calebdf2, aes_string(input$predictor)) +
+      geom_bar(aes(fill = calebdf2$'Applicable_Manufacturer_or_GOP_Making_Payment_Country')) +
+      ggtitle("Payments by Country") +
       theme(axis.title.y = element_blank(),
             axis.text.y = element_blank(),
             axis.ticks.y = element_blank(),
             axis.title.x = element_blank(),
-            axis.text.x = element_text(size = 12),
+            axis.text.x = element_text(size = 15),
             legend.text = element_text(size = 19),
             legend.title = element_text(size = 20)) +
-
       guides(fill = guide_legend(title = "Country"))
     
   })

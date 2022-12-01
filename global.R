@@ -55,31 +55,38 @@ levels(Emmapayment2$nature_of_payment_or_transfer_of_value) <- c('Charitable Con
 PrimaryType <- unique(Emmapayment2$physician_primary_type)
 
 
-##Caleb
-### for box plot
-df <- read_csv("data/calebpayment.csv") # only making payment country & payment total
+# Caleb Start
+calebdf <- read_csv("data/calebpayment.csv") # only making payment country & payment total
 
 # merge with jenna's df
-df2 <- cbind(df, payment)
+calebdf2 <- cbind(calebdf, payment)
 
 # remove US
-df2 <- df2 %>% 
+calebdf2 <- calebdf2 %>% 
   filter(applicable_manufacturer_or_applicable_gpo_making_payment_country != "United States")
 
 # rename cols
-names(df2)[names(df2) == 'applicable_manufacturer_or_applicable_gpo_making_payment_country'] <- 'Applicable_Manufacturer_or_GOP_Making_Payment_Country'
-names(df2)[names(df2) == 'physician_primary_type'] <- 'Physician_Primary_Type'
-names(df2)[names(df2) == 'form_of_payment_or_transfer_of_value'] <- 'Form_of_Payment_or_Transfer_of_Value'
-names(df2)[names(df2) == 'charity_indicator'] <- 'Charity_Indicator'
-names(df2)[names(df2) == 'related_product_indicator'] <- 'Related_Product_Indicator'
-names(df2)[names(df2) == 'nature.of.payment'] <- 'Nature_of_Payment'
-names(df2)[names(df2) == 'recipient_city'] <- 'Recipient_City'
-df2$'Applicable_Manufacturer_or_GOP_Making_Payment_Country' <- as.factor(df2$'Applicable_Manufacturer_or_GOP_Making_Payment_Country')
-df2$'Physician_Primary_Type' <- as.factor(df2$'Physician_Primary_Type')
-df2$'Form_of_Payment_or_Transfer_of_Value' <- as.factor(df2$'Form_of_Payment_or_Transfer_of_Value')
-df2$'Related_Product_Indicator' <- as.factor(df2$'Related_Product_Indicator')
+names(calebdf2)[names(calebdf2) == 'applicable_manufacturer_or_applicable_gpo_making_payment_country'] <- 'Applicable_Manufacturer_or_GOP_Making_Payment_Country'
+names(calebdf2)[names(calebdf2) == 'physician_primary_type'] <- 'Physician_Primary_Type'
+names(calebdf2)[names(calebdf2) == 'form_of_payment_or_transfer_of_value'] <- 'Form_of_Payment_or_Transfer_of_Value'
+names(calebdf2)[names(calebdf2) == 'charity_indicator'] <- 'Charity_Indicator'
+names(calebdf2)[names(calebdf2) == 'related_product_indicator'] <- 'Related_Product_Indicator'
+names(calebdf2)[names(calebdf2) == 'nature.of.payment'] <- 'Nature_of_Payment'
+names(calebdf2)[names(calebdf2) == 'recipient_city'] <- 'Recipient_City'
 
-df2$'Charity_Indicator' <- as.factor(df2$'Charity_Indicator')
+# change data types
+calebdf2$'Applicable_Manufacturer_or_GOP_Making_Payment_Country' <- as.factor(calebdf2$'Applicable_Manufacturer_or_GOP_Making_Payment_Country')
+calebdf2$'Physician_Primary_Type' <- as.factor(calebdf2$'Physician_Primary_Type')
+calebdf2$'Form_of_Payment_or_Transfer_of_Value' <- as.factor(calebdf2$'Form_of_Payment_or_Transfer_of_Value')
+calebdf2$'Related_Product_Indicator' <- as.factor(calebdf2$'Related_Product_Indicator')
+calebdf2$'Charity_Indicator' <- as.factor(calebdf2$'Charity_Indicator')
+
+# list for UI
+countrycol <- list(
+  'Physician_Primary_Type', 'Related_Product_Indicator', 'Charity_Indicator',
+  'Form_of_Payment_or_Transfer_of_Value'
+)
+# Caleb End
 
 
 
