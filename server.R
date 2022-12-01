@@ -11,19 +11,40 @@ server <- function(input, output, session) {
 
 
   ## Text Outputs
-  output$txtOutput <- renderText({
-    paste0("Open Payments: Payments that drug & medical device companies 
-           make to covered recipients (physicians, nurses, etc). ")
-  })
+
   output$txtOutput2 <- renderText({
     paste0("Nature of Payments: Categories describing what form or type 
            of payment was made.")
   })
+  
   output$txtOutput3 <- renderText({
     paste0("Amount: For each zipcode, a cumulative total of the dollar amount
            from every payment over the years 2013-18.")
   })
 
+
+  output$txtOutput4 <- renderText({
+    paste0("List of countries, except the US, who made payments.")
+  })
+  
+  output$Gracetxt <- renderText({
+    paste0("Summary Payments: Summary statistics for payments in each category 
+          of doctor for each year from 2013 to 2018.")
+  })
+  
+  output$Emmatxt <- renderText({
+    paste0("Total Payment Amount by Payment Type and Profession")
+  })
+  
+  output$Marietxt <- renderText({
+    paste0("Total Payment Amounts received by each Physician for selected cities.")
+  })
+  
+  output$Abouttxt <- renderText({
+    paste0("Open Payments: Payments that drug & medical device companies 
+           make to covered recipients (physicians, nurses, etc). 
+           Learn more at https://www.cms.gov/openpayments")
+  })
 
 
 
@@ -32,11 +53,18 @@ server <- function(input, output, session) {
   output$city <- renderUI({
     selectInput("city", "Select City", choices = cities)
   })
-  
+
   output$EmmaType <- renderUI({
     selectInput("EmmaType", "Select Physician Type", choices = PrimaryType)
   })
   
+  ## 'Select Year' Output
+  output$year <- renderUI({
+    selectInput("year", "Select Year", choices = 2013:2018)
+  })
+
+
+
 
   ## Plot Outputs
   output$donut_plot <- renderPlotly({
@@ -131,4 +159,60 @@ server <- function(input, output, session) {
                   xlab("Type of Payment") + ylab("Total Payment Amount (US Dollars)")
     plot(Emmaplot)
   }, height = 600, width = 1000)
+
+  output$violin_plot <- renderPlot({
+    
+    # Make the years match up from data
+    Filtered <- filter(Open_Hannah, year %in% input$year)
+    
+    # add the violin plot
+    ggplot(Filtered, 
+           aes_string(x = input$year, y = "total_amount_of_payment_usdollars")) +
+      geom_violin(aes(fill = recipient_city)) +
+      theme(axis.text.y = element_text(size = 15),
+            axis.title.y = element_text(size = 20),
+            axis.title.x = element_blank(),
+            axis.text.x = element_blank(),
+            legend.text = element_text(size = 15),
+            legend.title = element_text(size = 15)) +
+      labs(y = "Payment ($US)")
+  })
+
+  
+
+  output$country <- renderPlot({
+    ggplot(df2, aes_string(input$predictors)) +
+      geom_bar(aes(fill = df2$'Applicable_Manufacturer_or_GOP_Making_Payment_Country')) +
+      theme(axis.title.y = element_blank(),
+            axis.text.y = element_blank(),
+            axis.ticks.y = element_blank(),
+            axis.title.x = element_blank(),
+            axis.text.x = element_text(size = 12),
+            legend.text = element_text(size = 19),
+            legend.title = element_text(size = 20)) +
+            guides(fill = guide_legend(title = "Country"))
+    
+  })
+  
+    ## Interactive plotly for physician totals, Marie
+  output$MariePlotly <- renderPlotly({
+    # initiate data values
+    city <- input$city
+    
+    # Histogram of total payment per physician
+    payment_totals <-
+      ggplot(phys_amount, aes(Total, na.rm=TRUE)) +
+      geom_histogram(data=subset(phys_amount, 
+                                 City==city & 
+                                   !is.na(Total) &
+                                   Total > 1),
+                     fill="blue", 
+                     bins=10000) +
+      labs(title="Total payments ($) received per physician") + 
+      xlab("Total payments received ($)") 
+    
+    ggplotly(payment_totals)
+  })
+
+
 }

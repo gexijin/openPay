@@ -4,6 +4,7 @@
 
 library(shiny)
 library(plotly)
+library(DT)
 
 # Define UI for application that draws a histogram
 fluidPage(
@@ -14,22 +15,15 @@ fluidPage(
                 align = "center"
   )),
 
-  # Sidebar with a select input for City
-  sidebarLayout(
+  titlePanel("Doctor's Payments In South Dakota (2013-2018)"
+  ),
+  
+  # Main Panel
 
-
-    sidebarPanel(width = 0),
-    fluid = TRUE,
     mainPanel(
 
       ## Text Output and Styles
-      verbatimTextOutput("txtOutput"),
       tags$head(
-        tags$style("#txtOutput{color: steelblue;
-                                 font-size: 18px;
-                                 font-style: bold;
-                                 font-family: Arial;
-                                 }"),
         tags$style("#txtOutput2{color: steelblue;
                                  font-size: 17px;
                                  font-style: bold;
@@ -40,6 +34,19 @@ fluidPage(
                                  font-style: bold;
                                  font-family: Arial;
                                  }"),
+
+        tags$style("#txtOutput_Hannah{color: steelblue;
+                                      font-size: 17px;
+                                      font-style: bold;
+                                      font-family: Arial;
+                                      }"),
+
+        tags$style("#txtOutput4{color: steelblue;
+                                 font-size: 17px;
+                                 font-style: bold;
+                                 font-family: Arial;
+                                 }"),
+
         tags$style("#city{font-size: 17px;}")
       ),
 
@@ -54,23 +61,78 @@ fluidPage(
       tabsetPanel(
         type = "tabs",
         tabPanel(
-          "Nature of Payments, by City",
+          "City",
           uiOutput("city"),
           plotlyOutput("donut_plot"),
           verbatimTextOutput("txtOutput2")
         ),
         tabPanel(
-          "Totaled Payment Amounts, by Zipcode",
+          "Zipcode",
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
         ),
+
         tabPanel(
           "Total Payment and Type, by Physician Type",
           uiOutput("EmmaType"),
           plotOutput("Emma"),
+          "Years",
+          uiOutput("year"),
+          plotOutput("violin_plot"),
+          verbatimTextOutput("txtOutput_Hannah")
+        ),
+
+
+        tabPanel("Country",
+          sidebarLayout(
+            sidebarPanel(
+              titlePanel("Payments by Country"),
+              selectInput("predictors", h3("Select Variable"),
+                          choices = c('Physician_Primary_Type',
+                                      'Related_Product_Indicator',
+                                      'Charity_Indicator',
+                                      'Form_of_Payment_or_Transfer_of_Value')
+                          )
+            ),
+            mainPanel(plotOutput("country"))
+          ),
+          verbatimTextOutput("txtOutput4")
+         ),
+        tabPanel(
+          "Total & Type",
+          verbatimTextOutput("Emmatxt")
+        ),        
+        tabPanel(
+          "Summaries",
+          verbatimTextOutput("Gracetxt")
+        ),
+        tabPanel(
+          "Payments by Physician",
+          verbatimTextOutput("Marietxt"),
+          sidebarLayout(
+            sidebarPanel(
+              titlePanel("Total payments received per physician"),
+              selectInput("city",
+                          h3("City of interest:"),
+                          choices = c("SIOUX FALLS",
+                                      "BROOKINGS",
+                                      "ABERDEEN",
+                                      "PINE RIDGE",
+                                      "GROTON",
+                                      "RAPID CITY"))
+              ),
+              mainPanel(plotlyOutput("MariePlotly"))
+          )
+          
+          
+        ),
+        tabPanel(
+          "About",
+          verbatimTextOutput("Abouttxt")
+
         )
       ),
     width = 12
     )
-  )
 )
+
