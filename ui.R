@@ -33,19 +33,11 @@ fluidPage(
                                  font-style: bold;
                                  font-family: Times New Roman;
                                  }"),
-
-        tags$style("#txtOutput_Hannah{color: black;
-                                      font-size: 17px;
-                                      font-style: bold;
-                                      font-family: Times New Roman;
-                                      }"),
-
         tags$style("#txtOutput4{color: black;
                                  font-size: 17px;
                                  font-style: bold;
                                  font-family: Times New Roman;
                                  }"),
-
         tags$style("#city{color: black;
                                  font-size: 17px;
                                  font-style: bold;
@@ -82,8 +74,8 @@ fluidPage(
         tabPanel(
           "Years",
           uiOutput("year"),
-          plotOutput("violin_plot"),
-          verbatimTextOutput("txtOutput_Hannah")
+          plotOutput("violin_plot_Hannah"),
+          verbatimTextOutput("Hannahtxt")
         ),
 
         
