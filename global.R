@@ -13,12 +13,10 @@ total_pay_data <- read_csv("data/Open_Payment_south_dakota_2013-18.csv")
 total_pay_data$year <- substr(total_pay_data$date_of_payment, 1, 4)
 
 
-
+## Jenna Start ##
 ## for donut plot
-payment <- read_csv("data/payment.csv")
-payment$nature.of.payment <- as.factor(payment$nature.of.payment)
-
-
+jennapayment <- read_csv("data/jennapayment.csv")
+jennapayment$nature.of.payment <- as.factor(jennapayment$nature.of.payment)
 
 cities <- list(
   "SIOUX FALLS", "RAPID CITY", "PIERRE", "WATERTOWN", "VERMILLION",
@@ -26,7 +24,8 @@ cities <- list(
 )
 
 ## for map plot
-mapdata <- read_csv("data/zippy.csv")
+mapdata <- read_csv("data/zipcode_data.csv")
+## Jenna End ##
 
 Open_Hannah <- total_pay_data %>%
   filter(total_amount_of_payment_usdollars >= 1 & total_amount_of_payment_usdollars <= 50) %>%
@@ -59,7 +58,9 @@ PrimaryType <- unique(Emmapayment2$physician_primary_type)
 calebdf <- read_csv("data/calebpayment.csv") # only making payment country & payment total
 
 # merge with jenna's df
-calebdf2 <- cbind(calebdf, payment)
+
+calebdf2 <- cbind(calebdf, jennapayment)
+
 
 # remove US
 calebdf2 <- calebdf2 %>% 
@@ -93,8 +94,11 @@ countrycol <- list(
 #for Natalie's bar graph
 library(dplyr)
 paymentdata_natalie <- read_csv("data/Open_Payment_south_dakota_2013-18.csv", 
-      col_types = cols(total_amount_of_payment_usdollars = col_number(), 
-      program_year = col_number()))
+      col_types = cols(
+        total_amount_of_payment_usdollars = col_number(),
+        program_year = col_number()
+      )
+)
 payment_natalie <- paymentdata_natalie %>%
   filter(paymentdata_natalie$total_amount_of_payment_usdollars > 1)
 payment_natalie$year <- substr(payment_natalie$date_of_payment, 1, 4) 

@@ -13,7 +13,7 @@ fluidPage(
   # Application title
 
 
-  titlePanel("Doctor's Payments In South Dakota (2013-2018)"),
+  titlePanel("Doctor's Payments In South Dakota (2013-2021)"),
   
   # Main Panel
 
@@ -69,7 +69,7 @@ fluidPage(
       tabsetPanel(
         type = "tabs",
         tabPanel(
-          "Payment type",
+          "Payment Type",
           uiOutput("city"),
           plotlyOutput("donut_plot"),
           verbatimTextOutput("txtOutput2")
