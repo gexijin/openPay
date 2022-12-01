@@ -50,8 +50,18 @@ fluidPage(
                                  font-size: 17px;
                                  font-style: bold;
                                  font-family: Times New Roman;
-                                 }}")
-      ),
+                                 }}"),
+        tags$style("#Marietxt{color: black;
+                                 font-size: 17px;
+                                 font-style: bold;
+                                 font-family: Times New Roman;
+                                 }}"),
+        tags$style("#Marietxt_search{color: black;
+                                             font-size: 17px;
+                                             font-style: bold;
+                                             font-family: Times New Roman;
+                                             }}")
+      ), 
       
       
       ## Tabs Panel
@@ -131,6 +141,8 @@ fluidPage(
           plotOutput("Emma")
 
         ),
+      
+        ### Begin Marie tab
         tabPanel(
           "Distribution",
           verbatimTextOutput("Marietxt"),
@@ -148,10 +160,13 @@ fluidPage(
               ),
               mainPanel(plotlyOutput("MariePlotly"))
           )
-          
-
         ),
-        
+        tabPanel(
+          "Search",
+          verbatimTextOutput("Marietxt_search"),
+          DTOutput("distTable_marie")       
+        ),
+        ### End Marie tab        
         
         ###Jakob's Addition
         

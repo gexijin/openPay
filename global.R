@@ -94,13 +94,48 @@ payment_natalie$year <- substr(payment_natalie$date_of_payment, 1, 4)
 
 payment_natalie$physician_primary_type <- as.factor(payment_natalie$physician_primary_type)
 
+################# Marie's code
+
+# Fix typos in city variable
+
+# Change recipient_city to factor and change case
+total_pay_data$recipient_city <- as.factor(
+  toupper(total_pay_data$recipient_city))
+
+# Fix typos in key cities
+levels(total_pay_data$recipient_city)[
+  levels(total_pay_data$recipient_city) =="BOBRIDGE"] <- "MOBRIDGE"
+
+levels(total_pay_data$recipient_city)[
+  levels(total_pay_data$recipient_city) == "SIOUXFALLS"|
+  levels(total_pay_data$recipient_city) == "SIOUS FALLS"|
+  levels(total_pay_data$recipient_city) == "SIOUX FALLAS"|
+  levels(total_pay_data$recipient_city) == "AVE SIOUX FALLS"|
+  levels(total_pay_data$recipient_city) == "SIOUX FALL"] <- "SIOUX FALLS"
+
+levels(total_pay_data$recipient_city)[
+  levels(total_pay_data$recipient_city) == "RA[ID CITY"|
+  levels(total_pay_data$recipient_city) == "RAPIID CITY"] <- "RAPID CITY"
+
+levels(total_pay_data$recipient_city)[
+  levels(total_pay_data$recipient_city) == "N SIOUX CITY"|
+  levels(total_pay_data$recipient_city) == "NORTH SIOU"|
+  levels(total_pay_data$recipient_city) == "SIOUX CITY"] <- "NORTH SIOUX CITY"
+
+levels(total_pay_data$recipient_city)[
+  levels(total_pay_data$recipient_city) == "400 22ND AVE"] <- "BROOKINGS"
+
 
 ### New variables for the physician totals
 # Create single name variable
 total_pay_data$physician_full_name <- 
-  paste(total_pay_data$physician_first_name,
-        total_pay_data$physician_last_name,
-        sep = " ")
+  toupper(
+    paste(
+      total_pay_data$physician_first_name,
+      total_pay_data$physician_last_name,
+      sep = " "
+    )
+  )
 
 # Total payments received by each physician
 phys_amount <- aggregate(total_pay_data$total_amount_of_payment_usdollars, 
@@ -114,7 +149,7 @@ phys_amount <- phys_amount %>%
          City = Group.2,
          Total = x)
 
-
+############# End Marie's code
 
 ###################
 #Jakob's addition
