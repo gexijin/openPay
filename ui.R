@@ -9,11 +9,11 @@ library(DT)
 # Define UI for application that draws a histogram
 fluidPage(
 
-  # Application title
-  
 
-  titlePanel("Doctor's Payments In South Dakota (2013-2018)"
-  ),
+  # Application title
+
+
+  titlePanel("Doctor's Payments In South Dakota (2013-2018)"),
   
   # Main Panel
 
@@ -52,8 +52,8 @@ fluidPage(
                                  font-family: Times New Roman;
                                  }}")
       ),
-
-
+      
+      
       ## Tabs Panel
       tags$head(
         tags$style(
@@ -68,13 +68,13 @@ fluidPage(
       tabsetPanel(
         type = "tabs",
         tabPanel(
-          "City",
+          "Payment type",
           uiOutput("city"),
           plotlyOutput("donut_plot"),
           verbatimTextOutput("txtOutput2")
         ),
         tabPanel(
-          "Zipcode",
+          "Map",
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
         ),
@@ -86,26 +86,39 @@ fluidPage(
           verbatimTextOutput("txtOutput_Hannah")
         ),
 
+        
 
         tabPanel("Country",
-          sidebarLayout(
-            sidebarPanel(
-              titlePanel("Payments by Country"),
-              selectInput("predictors", h3("Select Variable"),
-                          choices = c('Physician_Primary_Type',
-                                      'Related_Product_Indicator',
-                                      'Charity_Indicator',
-                                      'Form_of_Payment_or_Transfer_of_Value')
-                          )
-            ),
-            mainPanel(plotOutput("country"))
+                 sidebarLayout(
+                   sidebarPanel(
+                     selectInput("predictors", h3("Select Variable"),
+                                 choices = c('Physician_Primary_Type',
+                                             'Related_Product_Indicator',
+                                             'Charity_Indicator',
+                                             'Form_of_Payment_or_Transfer_of_Value')
+                     )
+                   ),
+                   mainPanel(plotOutput("country"))
+                 ),
+                 verbatimTextOutput("txtOutput4")
+        ),
+        tabPanel("Physician Types",
+        sidebarLayout(
+          sidebarPanel(
+            selectInput(
+              inputId = "SelectDr",
+              label = "Select Desired Physician Type(s)",
+              choices = unique(payment_natalie$physician_primary_type),
+              selected = "Medical Doctor",
+              multiple = TRUE
+            )
+
           ),
-          verbatimTextOutput("txtOutput4")
-         ),
-        tabPanel(
-          "Total & Type",
-          verbatimTextOutput("Emmatxt")
-        ),        
+          mainPanel(
+            plotOutput("distPlot")
+          )
+        )
+        ),
       tabPanel(
         "Summaries",
         uiOutput("SelectYear"),
@@ -113,12 +126,18 @@ fluidPage(
         verbatimTextOutput("Gracetxt")
       ),
         tabPanel(
-          "Payments by Physician",
+          "Type",
+          uiOutput("EmmaType"),
+          plotOutput("Emma")
+
+        ),
+        tabPanel(
+          "Distribution",
           verbatimTextOutput("Marietxt"),
           sidebarLayout(
             sidebarPanel(
               titlePanel("Total payments received per physician"),
-              selectInput("city",
+              selectInput("city_marie",
                           h3("City of interest:"),
                           choices = c("SIOUX FALLS",
                                       "BROOKINGS",
@@ -136,7 +155,7 @@ fluidPage(
         
         ###Jakob's Addition
         
-        tabPanel("Payment Over Time", 
+        tabPanel("Sequence", 
                  sidebarLayout(
                    sidebarPanel(
                      
@@ -144,30 +163,31 @@ fluidPage(
                      
                      selectInput("Year", h3("Years"),
                                  choices = c('All', '2013', '2014', '2015',
-                                             '2016', '2017', '2018'))
+                                             '2016', '2017', '2018')),
+                     h4("Click on the data points for more info.")
                    ),
                    mainPanel(plotOutput("jfplot", click = "plot_click"),
                    tableOutput("jfdatatable"))
                  )
         ),
+        tabPanel(
+        "Physician Type",
+        plotOutput("type1"),
+        verbatimTextOutput("Luketxt")
+        
+      ),
         
 
         tabPanel(
           "About",
           verbatimTextOutput("Abouttxt")
 
-      
-        ),
+        )
 
-      tabPanel(
-        "Physician Type",
-        plotOutput("type1"),
-        verbatimTextOutput("Luketxt")
-        
-      )
       ),
-      width = 12
+    width = 12
     )
-)
+
+  )
 
 

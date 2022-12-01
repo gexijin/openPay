@@ -5,6 +5,7 @@ library(sf) ## Overall handling of sf objects
 library(cartography) ## Plotting maps package
 library(tigris) ## For downloading the zipcode map
 
+
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
 
@@ -25,6 +26,7 @@ server <- function(input, output, session) {
     paste0("Amount: For each zipcode, a cumulative total of the dollar amount
            from every payment over the years 2013-18.")
   })
+
 
   
 
@@ -57,15 +59,6 @@ server <- function(input, output, session) {
            Learn more at https://www.cms.gov/openpayments")
   })
 
-  output$Luketxt <- renderText({
-    paste0("Primary type of the Physician.
-              Medical Doctor = 86,303
-              Doctor of Osteopathy = 7866
-              Doctor of Dentisty = 4131
-              Doctor of Optometry  = 3256
-              Doctor of Podiatric Medicine = 948
-              Chiropractor = 37")
-  })
 
 
 
@@ -75,6 +68,12 @@ server <- function(input, output, session) {
   output$city <- renderUI({
     selectInput("city", "Select City", choices = cities)
   })
+
+
+  output$EmmaType <- renderUI({
+    selectInput("EmmaType", "Select Physician Type", choices = PrimaryType)
+  })
+  
 
   ## 'Select Year' Output
   output$year <- renderUI({
@@ -181,7 +180,7 @@ server <- function(input, output, session) {
       col = carto.pal(pal1 = "blue.pal", n1 = 8)
     )
   })
-  
+
 
 
   output$violin_plot <- renderPlot({
@@ -202,7 +201,14 @@ server <- function(input, output, session) {
       labs(y = "Payment ($US)")
   })
 
-  
+  output$Emma <- renderPlot({
+    Emmaplot <- ggplot(data = subset(Emmapayment2, Emmapayment2$physician_primary_type == input$EmmaType), 
+                       mapping = aes(x = nature_of_payment_or_transfer_of_value, y = total_amount_of_payment_usdollars)) +
+      geom_boxplot(fill = 'light blue') + ggtitle("Boxplot for Total Payment and Payment Type") +
+      theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
+      xlab("Type of Payment") + ylab("Total Payment Amount (US Dollars)")
+    plot(Emmaplot)
+  }, height = 600, width = 1000)
 
 
   output$country <- renderPlot({
@@ -289,7 +295,7 @@ server <- function(input, output, session) {
     ## Interactive plotly for physician totals, Marie
   output$MariePlotly <- renderPlotly({
     # initiate data values
-    city <- input$city
+    city <- input$city_marie
     
     # Histogram of total payment per physician
     payment_totals <-
@@ -354,12 +360,34 @@ server <- function(input, output, session) {
     nearPoints(jfpay3, input$plot_click, xvar = "date", yvar = "Payment")
     
   })
-
- output$type1 <- renderPlot({
+  
+    
+    output$distPlot <- renderPlot({
+      d = payment_natalie %>% filter(physician_primary_type %in% input$SelectDr)
+      ggplot(data = d, mapping = 
+               aes(x = d$year, fill = d$physician_primary_type)) +
+        labs(x = "Years", y = "Payments Made to Physician(s)", 
+             fill = "Physician(s)") +
+        geom_bar(position = 'dodge')
+    })
+    
+     output$type1 <- renderPlot({
    
    plot(type$physician_primary_type, xlab = "type", ylab = "amount",
         main = "Primary Type of Physician")
  })
+   output$Luketxt <- renderText({
+    paste0("Primary type of the Physician.
+              Medical Doctor = 86,303
+              Doctor of Osteopathy = 7866
+              Doctor of Dentisty = 4131
+              Doctor of Optometry  = 3256
+              Doctor of Podiatric Medicine = 948
+              Chiropractor = 37")
+  })
+    
+
 
 }
+
 
