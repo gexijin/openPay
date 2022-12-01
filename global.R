@@ -86,8 +86,11 @@ df2$'Charity_Indicator' <- as.factor(df2$'Charity_Indicator')
 #for Natalie's bar graph
 library(dplyr)
 paymentdata_natalie <- read_csv("data/Open_Payment_south_dakota_2013-18.csv", 
-      col_types = cols(total_amount_of_payment_usdollars = col_number(), 
-      program_year = col_number()))
+      col_types = cols(
+        total_amount_of_payment_usdollars = col_number(),
+        program_year = col_number()
+      )
+)
 payment_natalie <- paymentdata_natalie %>%
   filter(paymentdata_natalie$total_amount_of_payment_usdollars > 1)
 payment_natalie$year <- substr(payment_natalie$date_of_payment, 1, 4) 
