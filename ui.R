@@ -72,16 +72,6 @@ fluidPage(
           verbatimTextOutput("txtOutput3")
         ),
 
-        tabPanel(
-          "Total Payment and Type, by Physician Type",
-          uiOutput("EmmaType"),
-          plotOutput("Emma"),
-          "Years",
-          uiOutput("year"),
-          plotOutput("violin_plot"),
-          verbatimTextOutput("txtOutput_Hannah")
-        ),
-
 
         tabPanel("Country",
           sidebarLayout(
@@ -105,6 +95,15 @@ fluidPage(
         tabPanel(
           "Summaries",
           verbatimTextOutput("Gracetxt")
+        ),
+        tabPanel(
+          "Total Payment and Type, by Physician Type",
+          uiOutput("EmmaType"),
+          plotOutput("Emma"),
+          "Years",
+          uiOutput("year"),
+          plotOutput("violin_plot"),
+          verbatimTextOutput("txtOutput_Hannah")
         ),
         tabPanel(
           "Payments by Physician",

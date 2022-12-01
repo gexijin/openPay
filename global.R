@@ -28,6 +28,13 @@ cities <- list(
 ## for map plot
 mapdata <- read_csv("zippy.csv")
 
+Open_Hannah <- total_pay_data %>%
+  filter(total_amount_of_payment_usdollars >= 1 & total_amount_of_payment_usdollars <= 50) %>%
+  filter(recipient_city %in% c('SIOUX FALLS' , 'RAPID CITY','ABERDEEN', 'BROOKINGS','WATERTOWN'))
+
+Open_Hannah$year <- substr(Open_Hannah$date_of_payment, 1, 4)
+Open_Hannah$year <- as.factor(Open_Hannah$year)
+
 ## for Emma's tab
 #get data
 Emmapayment <- read.csv("~/Github/openPay/Emmapayment.csv")
@@ -46,13 +53,6 @@ levels(Emmapayment2$nature_of_payment_or_transfer_of_value) <- c('Charitable Con
                                                                  'Gift', 'Grant', 'Honoraria', 'Royalty/License', 'Space Rental', 'Travel/Lodging')
 
 PrimaryType <- unique(Emmapayment2$physician_primary_type)
-
-Open_Hannah <- total_pay_data %>%
-  filter(total_amount_of_payment_usdollars >= 1 & total_amount_of_payment_usdollars <= 50) %>%
-  filter(recipient_city %in% c('SIOUX FALLS' , 'RAPID CITY','ABERDEEN', 'BROOKINGS','WATERTOWN'))
-
-Open_Hannah$year <- substr(Open_Hannah$date_of_payment, 1, 4)
-Open_Hannah$year <- as.factor(Open_Hannah$year)
 
 
 ##Caleb
