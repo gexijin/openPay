@@ -156,8 +156,15 @@ fluidPage(
           "About",
           verbatimTextOutput("Abouttxt")
 
-        )
+      
+        ),
 
+      tabPanel(
+        "Physician Type",
+        plotOutput("type1"),
+        verbatimTextOutput("Luketxt")
+        
+      )
       ),
       width = 12
     )
