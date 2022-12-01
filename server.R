@@ -85,6 +85,8 @@ server <- function(input, output, session) {
 
 
   ## Plot Outputs
+  
+  ## Jenna Start ##
   output$donut_plot <- renderPlotly({
     
     # this solves the error when starting up.
@@ -180,7 +182,7 @@ server <- function(input, output, session) {
       col = carto.pal(pal1 = "blue.pal", n1 = 8)
     )
   })
-
+  ## Jenna End ##
 
 
   output$violin_plot <- renderPlot({
