@@ -68,13 +68,13 @@ fluidPage(
       tabsetPanel(
         type = "tabs",
         tabPanel(
-          "City",
+          "Payment type",
           uiOutput("city"),
           plotlyOutput("donut_plot"),
           verbatimTextOutput("txtOutput2")
         ),
         tabPanel(
-          "Zipcode",
+          "Map",
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
         ),
@@ -119,10 +119,6 @@ fluidPage(
           )
         )
         ),
-        tabPanel(
-          "Total & Type",
-          verbatimTextOutput("Emmatxt")
-        ),        
       tabPanel(
         "Summaries",
         uiOutput("SelectYear"),
@@ -130,16 +126,13 @@ fluidPage(
         verbatimTextOutput("Gracetxt")
       ),
         tabPanel(
-          "Total Payment and Type, by Physician Type",
+          "Type",
           uiOutput("EmmaType"),
-          plotOutput("Emma"),
-          "Years",
-          uiOutput("year"),
-          plotOutput("violin_plot"),
-          verbatimTextOutput("txtOutput_Hannah")
+          plotOutput("Emma")
+
         ),
         tabPanel(
-          "Payments by Physician",
+          "Distribution",
           verbatimTextOutput("Marietxt"),
           sidebarLayout(
             sidebarPanel(
@@ -162,7 +155,7 @@ fluidPage(
         
         ###Jakob's Addition
         
-        tabPanel("Payment Over Time", 
+        tabPanel("Sequence", 
                  sidebarLayout(
                    sidebarPanel(
                      
@@ -170,7 +163,8 @@ fluidPage(
                      
                      selectInput("Year", h3("Years"),
                                  choices = c('All', '2013', '2014', '2015',
-                                             '2016', '2017', '2018'))
+                                             '2016', '2017', '2018')),
+                     h4("Click on the data points for more info.")
                    ),
                    mainPanel(plotOutput("jfplot", click = "plot_click"),
                    tableOutput("jfdatatable"))

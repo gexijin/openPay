@@ -37,7 +37,7 @@ Open_Hannah$year <- as.factor(Open_Hannah$year)
 
 ## for Emma's tab
 #get data
-Emmapayment <- read.csv("~/Github/openPay/Emmapayment.csv")
+Emmapayment <- read.csv("data/Emmapayment.csv")
 # filter to payments greater than $1
 Emmapayment2 <- Emmapayment %>% filter(Emmapayment$total_amount_of_payment_usdollars > 1)
 # filter to payments less than $1000
