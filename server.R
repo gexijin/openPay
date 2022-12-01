@@ -94,7 +94,7 @@ server <- function(input, output, session) {
     req(input$city) 
     
     ## using input for city
-    donutdata <- filter(payment, recipient_city == input$city)
+    donutdata <- filter(jennapayment, recipient_city == input$city)
 
 
 
