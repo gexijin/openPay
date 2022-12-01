@@ -371,7 +371,23 @@ server <- function(input, output, session) {
         geom_bar(position = 'dodge')
     })
     
+     output$type1 <- renderPlot({
+   
+   plot(type$physician_primary_type, xlab = "type", ylab = "amount",
+        main = "Primary Type of Physician")
+ })
+   output$Luketxt <- renderText({
+    paste0("Primary type of the Physician.
+              Medical Doctor = 86,303
+              Doctor of Osteopathy = 7866
+              Doctor of Dentisty = 4131
+              Doctor of Optometry  = 3256
+              Doctor of Podiatric Medicine = 948
+              Chiropractor = 37")
+  })
+    
 
 
 }
+
 

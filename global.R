@@ -124,5 +124,8 @@ jfpay3 <- jfpay[-c(1)]
 jfpay3$date <- as.Date(jfpay3$date, "%Y-%m-%d")
 jfpay3$year <- as.character(jfpay3$year)
 
-
+##Luke's Addition
+type <- total_pay_data[, c("physician_primary_type")]
+type %>% drop_na(physician_primary_type)
+type$physician_primary_type <- as.factor(type$physician_primary_type)
 

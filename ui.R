@@ -170,6 +170,12 @@ fluidPage(
                    tableOutput("jfdatatable"))
                  )
         ),
+        tabPanel(
+        "Physician Type",
+        plotOutput("type1"),
+        verbatimTextOutput("Luketxt")
+        
+      ),
         
 
         tabPanel(
