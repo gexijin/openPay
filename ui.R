@@ -13,7 +13,7 @@ fluidPage(
   # Application title
 
 
-  titlePanel("Doctor's Payments In South Dakota (2013-2018)"),
+  titlePanel("Doctor's Payments In South Dakota (2013-2021)"),
   
   # Main Panel
 
@@ -33,6 +33,7 @@ fluidPage(
                                  font-style: bold;
                                  font-family: Times New Roman;
                                  }"),
+
         tags$style("#txtOutput4{color: black;
                                  font-size: 17px;
                                  font-style: bold;
@@ -57,14 +58,16 @@ fluidPage(
                                  }} "
         )
       ),
+      
       tabsetPanel(
         type = "tabs",
         tabPanel(
-          "Payment type",
+          "Payment Type",
           uiOutput("city"),
           plotlyOutput("donut_plot"),
           verbatimTextOutput("txtOutput2")
         ),
+        
         tabPanel(
           "Map",
           plotOutput("sd_map"),
@@ -78,22 +81,13 @@ fluidPage(
           verbatimTextOutput("Hannahtxt")
         ),
 
-        
-
-        tabPanel("Country",
-                 sidebarLayout(
-                   sidebarPanel(
-                     selectInput("predictors", h3("Select Variable"),
-                                 choices = c('Physician_Primary_Type',
-                                             'Related_Product_Indicator',
-                                             'Charity_Indicator',
-                                             'Form_of_Payment_or_Transfer_of_Value')
-                     )
-                   ),
-                   mainPanel(plotOutput("country"))
-                 ),
-                 verbatimTextOutput("txtOutput4")
+        tabPanel(
+          "Country",
+          uiOutput("predictor"),
+          plotOutput("country"),
+          verbatimTextOutput("Calebtxt")
         ),
+        
         tabPanel("Physician Types",
         sidebarLayout(
           sidebarPanel(
@@ -111,13 +105,15 @@ fluidPage(
           )
         )
         ),
+        
       tabPanel(
         "Summaries",
         uiOutput("SelectYear"),
         dataTableOutput("Grace_table"),
         verbatimTextOutput("Gracetxt")
       ),
-        tabPanel(
+      
+      tabPanel(
           "Type",
           uiOutput("EmmaType"),
           plotOutput("Emma")
