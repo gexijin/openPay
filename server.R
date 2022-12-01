@@ -27,6 +27,7 @@ server <- function(input, output, session) {
            from every payment over the years 2013-18.")
   })
 
+
   
 
   output$txtOutput4 <- renderText({
@@ -67,6 +68,12 @@ server <- function(input, output, session) {
   output$city <- renderUI({
     selectInput("city", "Select City", choices = cities)
   })
+
+
+  output$EmmaType <- renderUI({
+    selectInput("EmmaType", "Select Physician Type", choices = PrimaryType)
+  })
+  
 
   ## 'Select Year' Output
   output$year <- renderUI({
@@ -173,7 +180,7 @@ server <- function(input, output, session) {
       col = carto.pal(pal1 = "blue.pal", n1 = 8)
     )
   })
-  
+
 
 
   output$violin_plot <- renderPlot({
@@ -194,7 +201,14 @@ server <- function(input, output, session) {
       labs(y = "Payment ($US)")
   })
 
-  
+  output$Emma <- renderPlot({
+    Emmaplot <- ggplot(data = subset(Emmapayment2, Emmapayment2$physician_primary_type == input$EmmaType), 
+                       mapping = aes(x = nature_of_payment_or_transfer_of_value, y = total_amount_of_payment_usdollars)) +
+      geom_boxplot(fill = 'light blue') + ggtitle("Boxplot for Total Payment and Payment Type") +
+      theme(axis.text.x = element_text(angle = 30, hjust = 1)) + 
+      xlab("Type of Payment") + ylab("Total Payment Amount (US Dollars)")
+    plot(Emmaplot)
+  }, height = 600, width = 1000)
 
 
   output$country <- renderPlot({

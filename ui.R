@@ -11,7 +11,7 @@ fluidPage(
 
 
   # Application title
-  
+
 
   titlePanel("Doctor's Payments In South Dakota (2013-2018)"),
   
@@ -19,8 +19,8 @@ fluidPage(
 
 
     mainPanel(
-      
-      
+
+
       ## Text Output and Styles
       tags$head(
         tags$style("#txtOutput2{color: black;
@@ -78,6 +78,7 @@ fluidPage(
           plotOutput("sd_map"),
           verbatimTextOutput("txtOutput3")
         ),
+
         tabPanel(
           "Years",
           uiOutput("year"),
@@ -86,6 +87,7 @@ fluidPage(
         ),
 
         
+
         tabPanel("Country",
                  sidebarLayout(
                    sidebarPanel(
@@ -127,6 +129,15 @@ fluidPage(
         dataTableOutput("Grace_table"),
         verbatimTextOutput("Gracetxt")
       ),
+        tabPanel(
+          "Total Payment and Type, by Physician Type",
+          uiOutput("EmmaType"),
+          plotOutput("Emma"),
+          "Years",
+          uiOutput("year"),
+          plotOutput("violin_plot"),
+          verbatimTextOutput("txtOutput_Hannah")
+        ),
         tabPanel(
           "Payments by Physician",
           verbatimTextOutput("Marietxt"),
@@ -174,7 +185,7 @@ fluidPage(
         )
 
       ),
-      width = 12
+    width = 12
     )
 
   )
