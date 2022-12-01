@@ -7,7 +7,7 @@ library(tidyverse)
 
 
 #Read in entire open payments data set
-total_pay_data <- read_csv("Open_Payment_south_dakota_2013-18.csv")
+total_pay_data <- read_csv("data/Open_Payment_south_dakota_2013-18.csv")
 
 #Make year column of when payments were made
 total_pay_data$year <- substr(total_pay_data$date_of_payment, 1, 4)
@@ -15,10 +15,10 @@ total_pay_data$year <- substr(total_pay_data$date_of_payment, 1, 4)
 
 
 ## for donut plot
-payment <- read_csv("payment.csv")
+payment <- read_csv("data/payment.csv")
 payment$nature.of.payment <- as.factor(payment$nature.of.payment)
 
-total_pay_data <- read_csv("Open_Payment_south_dakota_2013-18.csv")
+
 
 cities <- list(
   "SIOUX FALLS", "RAPID CITY", "PIERRE", "WATERTOWN", "VERMILLION",
@@ -26,7 +26,7 @@ cities <- list(
 )
 
 ## for map plot
-mapdata <- read_csv("zippy.csv")
+mapdata <- read_csv("data/zippy.csv")
 
 Open_Hannah <- total_pay_data %>%
   filter(total_amount_of_payment_usdollars >= 1 & total_amount_of_payment_usdollars <= 50) %>%
@@ -57,7 +57,7 @@ PrimaryType <- unique(Emmapayment2$physician_primary_type)
 
 ##Caleb
 ### for box plot
-df <- read_csv("calebpayment.csv") # only making payment country & payment total
+df <- read_csv("data/calebpayment.csv") # only making payment country & payment total
 
 # merge with jenna's df
 df2 <- cbind(df, payment)
@@ -78,8 +78,21 @@ df2$'Applicable_Manufacturer_or_GOP_Making_Payment_Country' <- as.factor(df2$'Ap
 df2$'Physician_Primary_Type' <- as.factor(df2$'Physician_Primary_Type')
 df2$'Form_of_Payment_or_Transfer_of_Value' <- as.factor(df2$'Form_of_Payment_or_Transfer_of_Value')
 df2$'Related_Product_Indicator' <- as.factor(df2$'Related_Product_Indicator')
+
 df2$'Charity_Indicator' <- as.factor(df2$'Charity_Indicator')
 
+
+
+#for Natalie's bar graph
+library(dplyr)
+paymentdata_natalie <- read_csv("data/Open_Payment_south_dakota_2013-18.csv", 
+      col_types = cols(total_amount_of_payment_usdollars = col_number(), 
+      program_year = col_number()))
+payment_natalie <- paymentdata_natalie %>%
+  filter(paymentdata_natalie$total_amount_of_payment_usdollars > 1)
+payment_natalie$year <- substr(payment_natalie$date_of_payment, 1, 4) 
+
+payment_natalie$physician_primary_type <- as.factor(payment_natalie$physician_primary_type)
 
 
 ### New variables for the physician totals
@@ -100,4 +113,16 @@ phys_amount <- phys_amount %>%
   rename(Physician = Group.1,
          City = Group.2,
          Total = x)
+
+
+
+###################
+#Jakob's addition
+
+jfpay <- read.csv("data/jfpay.csv", stringsAsFactors=TRUE)
+jfpay3 <- jfpay[-c(1)]
+jfpay3$date <- as.Date(jfpay3$date, "%Y-%m-%d")
+jfpay3$year <- as.character(jfpay3$year)
+
+
 

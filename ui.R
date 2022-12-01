@@ -11,51 +11,58 @@ fluidPage(
 
 
   # Application title
-  titlePanel(h1("Open Payments In South Dakota (2013-2018)",
-                align = "center"
-  )),
 
-  titlePanel("Doctor's Payments In South Dakota (2013-2018)"
-  ),
+
+  titlePanel("Doctor's Payments In South Dakota (2013-2018)"),
   
   # Main Panel
 
+
     mainPanel(
+
 
       ## Text Output and Styles
       tags$head(
-        tags$style("#txtOutput2{color: steelblue;
+        tags$style("#txtOutput2{color: black;
                                  font-size: 17px;
                                  font-style: bold;
-                                 font-family: Arial;
+                                 font-family: Times New Roman;
                                  }"),
-        tags$style("#txtOutput3{color: steelblue;
+        tags$style("#txtOutput3{color: black;
                                  font-size: 17px;
                                  font-style: bold;
-                                 font-family: Arial;
+                                 font-family: Times New Roman;
                                  }"),
 
-        tags$style("#txtOutput_Hannah{color: steelblue;
+        tags$style("#txtOutput_Hannah{color: black;
                                       font-size: 17px;
                                       font-style: bold;
-                                      font-family: Arial;
+                                      font-family: Times New Roman;
                                       }"),
 
-        tags$style("#txtOutput4{color: steelblue;
+        tags$style("#txtOutput4{color: black;
                                  font-size: 17px;
                                  font-style: bold;
-                                 font-family: Arial;
+                                 font-family: Times New Roman;
                                  }"),
 
-        tags$style("#city{font-size: 17px;}")
+        tags$style("#city{color: black;
+                                 font-size: 17px;
+                                 font-style: bold;
+                                 font-family: Times New Roman;
+                                 }}")
       ),
-
-
+      
+      
       ## Tabs Panel
       tags$head(
         tags$style(
           type = "text/css",
-          ".nav-tabs {font-size: 18px} "
+          ".nav-tabs {color: black;
+                                 font-size: 19px;
+                                 font-style: bold;
+                                 font-family: Times New Roman;
+                                 }} "
         )
       ),
       tabsetPanel(
@@ -72,30 +79,56 @@ fluidPage(
           verbatimTextOutput("txtOutput3")
         ),
 
+        tabPanel(
+          "Years",
+          uiOutput("year"),
+          plotOutput("violin_plot"),
+          verbatimTextOutput("txtOutput_Hannah")
+        ),
+
+        
 
         tabPanel("Country",
-          sidebarLayout(
-            sidebarPanel(
-              titlePanel("Payments by Country"),
-              selectInput("predictors", h3("Select Variable"),
-                          choices = c('Physician_Primary_Type',
-                                      'Related_Product_Indicator',
-                                      'Charity_Indicator',
-                                      'Form_of_Payment_or_Transfer_of_Value')
-                          )
-            ),
-            mainPanel(plotOutput("country"))
+                 sidebarLayout(
+                   sidebarPanel(
+                     selectInput("predictors", h3("Select Variable"),
+                                 choices = c('Physician_Primary_Type',
+                                             'Related_Product_Indicator',
+                                             'Charity_Indicator',
+                                             'Form_of_Payment_or_Transfer_of_Value')
+                     )
+                   ),
+                   mainPanel(plotOutput("country"))
+                 ),
+                 verbatimTextOutput("txtOutput4")
+        ),
+        tabPanel("Physician Types",
+        sidebarLayout(
+          sidebarPanel(
+            selectInput(
+              inputId = "SelectDr",
+              label = "Select Desired Physician Type(s)",
+              choices = unique(payment_natalie$physician_primary_type),
+              selected = "Medical Doctor",
+              multiple = TRUE
+            )
+
           ),
-          verbatimTextOutput("txtOutput4")
-         ),
+          mainPanel(
+            plotOutput("distPlot")
+          )
+        )
+        ),
         tabPanel(
           "Total & Type",
           verbatimTextOutput("Emmatxt")
         ),        
-        tabPanel(
-          "Summaries",
-          verbatimTextOutput("Gracetxt")
-        ),
+      tabPanel(
+        "Summaries",
+        uiOutput("SelectYear"),
+        dataTableOutput("Grace_table"),
+        verbatimTextOutput("Gracetxt")
+      ),
         tabPanel(
           "Total Payment and Type, by Physician Type",
           uiOutput("EmmaType"),
@@ -111,7 +144,7 @@ fluidPage(
           sidebarLayout(
             sidebarPanel(
               titlePanel("Total payments received per physician"),
-              selectInput("city",
+              selectInput("city_marie",
                           h3("City of interest:"),
                           choices = c("SIOUX FALLS",
                                       "BROOKINGS",
@@ -123,15 +156,38 @@ fluidPage(
               mainPanel(plotlyOutput("MariePlotly"))
           )
           
-          
+
         ),
+        
+        
+        ###Jakob's Addition
+        
+        tabPanel("Payment Over Time", 
+                 sidebarLayout(
+                   sidebarPanel(
+                     
+                     titlePanel("Payment Over Time"),
+                     
+                     selectInput("Year", h3("Years"),
+                                 choices = c('All', '2013', '2014', '2015',
+                                             '2016', '2017', '2018'))
+                   ),
+                   mainPanel(plotOutput("jfplot", click = "plot_click"),
+                   tableOutput("jfdatatable"))
+                 )
+        ),
+        
+
         tabPanel(
           "About",
           verbatimTextOutput("Abouttxt")
 
         )
+
       ),
     width = 12
     )
-)
+
+  )
+
 
