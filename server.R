@@ -45,14 +45,20 @@ server <- function(input, output, session) {
   })
   
 
+  # Marie text descriptions
 
-
-  
   output$Marietxt <- renderText({
     paste0("Total Payment Amounts received by each Physician for selected cities.")
   })
-  
 
+
+  output$Marietxt_search <- renderText({
+    paste0("Look up either a physician to view the total payments that ",
+           "physician received or look up a city to view how much each ",
+           "physician in that city received. ")
+  })  
+  # End Marie text descriptions
+  
 
   output$Abouttxt <- renderText({
     paste0("Open Payments: Payments that drug & medical device companies 
@@ -322,8 +328,13 @@ server <- function(input, output, session) {
     ggplotly(payment_totals)
   })
   
+  # Create table of totals in descending order
+  output$distTable_marie <- renderDT({
+    datatable(filter(phys_amount))
+  })
+  ### End Marie code
   
-  
+    
   ################
   #Jakob's Addition
   
