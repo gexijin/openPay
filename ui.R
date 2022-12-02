@@ -23,12 +23,12 @@ fluidPage(
 
       ## Text Output and Styles
       tags$head(
-        tags$style("#txtOutput2{color: black;
+        tags$style("#Jennatxt1{color: black;
                                  font-size: 17px;
                                  font-style: bold;
                                  font-family: Times New Roman;
                                  }"),
-        tags$style("#txtOutput3{color: black;
+        tags$style("#Jennatxt2{color: black;
                                  font-size: 17px;
                                  font-style: bold;
                                  font-family: Times New Roman;
@@ -65,13 +65,13 @@ fluidPage(
           "Payment Type",
           uiOutput("city"),
           plotlyOutput("donut_plot"),
-          verbatimTextOutput("txtOutput2")
+          verbatimTextOutput("Jennatxt1")
         ),
         
         tabPanel(
           "Map",
           plotOutput("sd_map"),
-          verbatimTextOutput("txtOutput3")
+          verbatimTextOutput("Jennatxt2")
         ),
 
         tabPanel(

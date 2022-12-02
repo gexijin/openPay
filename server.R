@@ -14,13 +14,13 @@ server <- function(input, output, session) {
 
   ## Text Outputs
 
-  output$txtOutput2 <- renderText({
+  output$Jennatxt1 <- renderText({
     paste0("Nature of Payments: Categories describing what form or type 
            of payment was made.")
   })
 
   
-  output$txtOutput3 <- renderText({
+  output$Jennatxt2 <- renderText({
     paste0("Amount: For each zipcode, a cumulative total of the dollar amount
            from every payment over the years 2013-21.")
   })
