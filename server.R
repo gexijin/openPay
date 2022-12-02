@@ -14,27 +14,25 @@ server <- function(input, output, session) {
 
   ## Text Outputs
 
-
-  output$txtOutput2 <- renderText({
+  output$Jennatxt1 <- renderText({
     paste0("Nature of Payments: Categories describing what form or type 
            of payment was made.")
   })
 
   
-
-  output$txtOutput3 <- renderText({
+  output$Jennatxt2 <- renderText({
     paste0("Amount: For each zipcode, a cumulative total of the dollar amount
-           from every payment over the years 2013-18.")
+           from every payment over the years 2013-21.")
   })
 
 
-  
 
-  output$txtOutput4 <- renderText({
-    paste0("List of countries, except the US, who made payments.")
+
+  output$Calebtxt <- renderText({
+    paste0("See which countries, except the US, made payments.")
+
   })
   
-
 
   output$Gracetxt <- renderText({
     paste0("Summary Payments: Summary statistics for payments in each category 
@@ -42,15 +40,17 @@ server <- function(input, output, session) {
   })
 
   
-
   output$Emmatxt <- renderText({
     paste0("Total Payment Amount by Payment Type and Profession")
   })
   
+
   # Marie text descriptions
+
   output$Marietxt <- renderText({
     paste0("Total Payment Amounts received by each Physician for selected cities.")
   })
+
 
   output$Marietxt_search <- renderText({
     paste0("Look up either a physician to view the total payments that ",
@@ -59,10 +59,17 @@ server <- function(input, output, session) {
   })  
   # End Marie text descriptions
   
+
   output$Abouttxt <- renderText({
     paste0("Open Payments: Payments that drug & medical device companies 
            make to covered recipients (physicians, nurses, etc). 
            Learn more at https://www.cms.gov/openpayments")
+  })
+  
+  
+  output$Hannahtxt <- renderText({
+    paste0("Payments Over the Years: Shows the distribution of payments from $0 to 
+           $50 between five of the highest populated cities in South Dakota.")
   })
 
 
@@ -83,14 +90,17 @@ server <- function(input, output, session) {
 
   ## 'Select Year' Output
   output$year <- renderUI({
-    selectInput("year", "Select Year", choices = 2013:2018)
+    selectInput("year_Hannah", "Select Year", choices = 2013:2018)
+  })
+
+  output$predictor <- renderUI({
+    selectInput("predictor", "Select Variable", choices = countrycol)
   })
 
 
-
-
-
   ## Plot Outputs
+  
+  ## Jenna Start ##
   output$donut_plot <- renderPlotly({
     
     # this solves the error when starting up.
@@ -98,7 +108,7 @@ server <- function(input, output, session) {
     req(input$city) 
     
     ## using input for city
-    donutdata <- filter(payment, recipient_city == input$city)
+    donutdata <- filter(jennapayment, recipient_city == input$city)
 
 
 
@@ -186,26 +196,27 @@ server <- function(input, output, session) {
       col = carto.pal(pal1 = "blue.pal", n1 = 8)
     )
   })
+  ## Jenna End ##
 
-
-
-  output$violin_plot <- renderPlot({
+  ##Beginning of Hannah's Code 
+  output$violin_plot_Hannah <- renderPlot({
     
     # Make the years match up from data
-    Filtered <- filter(Open_Hannah, year %in% input$year)
+    Filtered_Hannah <- filter(Open_Hannah, year %in% input$year_Hannah)
     
-    # add the violin plot
-    ggplot(Filtered, 
-           aes_string(x = input$year, y = "total_amount_of_payment_usdollars")) +
+    # Add the violin plot
+    ggplot(Filtered_Hannah, 
+           aes_string(x = input$year_Hannah, y = "total_amount_of_payment_usdollars")) +
       geom_violin(aes(fill = recipient_city)) +
+      labs(y = "Payment ($US)")+
       theme(axis.text.y = element_text(size = 15),
             axis.title.y = element_text(size = 20),
             axis.title.x = element_blank(),
             axis.text.x = element_blank(),
             legend.text = element_text(size = 15),
-            legend.title = element_text(size = 15)) +
-      labs(y = "Payment ($US)")
+            legend.title = element_text(size = 15))
   })
+  ##End of Hannah's Code 
 
   output$Emma <- renderPlot({
     Emmaplot <- ggplot(data = subset(Emmapayment2, Emmapayment2$physician_primary_type == input$EmmaType), 
@@ -216,18 +227,17 @@ server <- function(input, output, session) {
     plot(Emmaplot)
   }, height = 600, width = 1000)
 
-
   output$country <- renderPlot({
-    ggplot(df2, aes_string(input$predictors)) +
-      geom_bar(aes(fill = df2$'Applicable_Manufacturer_or_GOP_Making_Payment_Country')) +
+    ggplot(calebdf2, aes_string(input$predictor)) +
+      geom_bar(aes(fill = calebdf2$'Applicable_Manufacturer_or_GOP_Making_Payment_Country')) +
+      ggtitle("Payments by Country") +
       theme(axis.title.y = element_blank(),
             axis.text.y = element_blank(),
             axis.ticks.y = element_blank(),
             axis.title.x = element_blank(),
-            axis.text.x = element_text(size = 12),
+            axis.text.x = element_text(size = 15),
             legend.text = element_text(size = 19),
             legend.title = element_text(size = 20)) +
-
       guides(fill = guide_legend(title = "Country"))
     
   })
