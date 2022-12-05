@@ -243,6 +243,7 @@ server <- function(input, output, session) {
   })
   
   
+## BEGINNING OF GRACE'S CODE  
   ## Select Year Output
   output$SelectYear <- renderUI({
     selectInput("SelectYear", "Select Year", choices = 2013:2018)
@@ -252,37 +253,38 @@ server <- function(input, output, session) {
     
     req(input$SelectYear) 
     
-    table_data <- filter(total_pay_data, year == input$SelectYear)
+    grace_table_data <- filter(total_pay_data, year == input$SelectYear)
     
-    #find sum of all payments for each doctor type
+    #find sum of all payments for each doctor type in selected year
     totalPayPerType <- aggregate(
       total_amount_of_payment_usdollars ~ physician_primary_type,
-      data = table_data,
+      data = grace_table_data,
       FUN = sum
     )
     
+    #find median of all payments for each doctor type in selected year
     medPayPerType <- aggregate(
       total_amount_of_payment_usdollars ~ physician_primary_type,
-      data = table_data,
+      data = grace_table_data,
       FUN = median
     )
     
-    
+    #find max payment for each doctor type in selected year
     maxPayPerType <- aggregate(
       total_amount_of_payment_usdollars ~ physician_primary_type,
-      data = table_data,
+      data = grace_table_data,
       FUN = max
     )
     
-    
+    #find min payment for each doctor type in selected year
     minPayPerType <- aggregate(
       total_amount_of_payment_usdollars ~ physician_primary_type,
-      data = table_data,
+      data = grace_table_data,
       FUN = min
     )
     
     #Combine all columns into one
-    fulltable <- merge(totalPayPerType, 
+    grace_fulltable <- merge(totalPayPerType, 
                        medPayPerType, 
                        by = "physician_primary_type") %>%
       merge(maxPayPerType, by = "physician_primary_type" ) %>%
@@ -290,14 +292,14 @@ server <- function(input, output, session) {
     
     
     #Change column names
-    colnames(fulltable) <- c("Physician Type",
+    colnames(grace_fulltable) <- c("Physician Type",
                              "Total Payment Amount",
                              "Most Common Payment",
                              "Max Payment", 
                              "Min Payment")
     
     #Print as table
-    datatable(fulltable,
+    datatable(grace_fulltable,
               options = list(orderClasses = TRUE),
               rownames = FALSE) %>%
       formatCurrency(2:5) %>% 
@@ -305,7 +307,7 @@ server <- function(input, output, session) {
     
   })
   
-
+## END OF GRACE'S CODE
 
   
     ## Interactive plotly for physician totals, Marie
